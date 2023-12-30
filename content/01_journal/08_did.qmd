@@ -2,6 +2,62 @@
 title: "Difference-in-Differences"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+# Assignment 8
+
+## Assignment 8.1
+```{r}
+library(Matching)
+library(ggdag)
+library(tidyverse)
+library(dagitty)
+library(MatchIt)
+
+# loading data into data
+data <- readRDS("data/hospdd.rds")
+data
+names(data)
+mean_before_treatment <- data %>%
+  filter(procedure == 0, hospital>= 1 & hospital<=18) %>%
+  pull(satis) %>%
+  mean()
+
+mean_after_treatment <- data %>%
+  filter(procedure == 1, hospital>= 1 & hospital<=18) %>%
+  pull(satis) %>%
+  mean()
+
+mean_before_control <- data %>%
+  filter(procedure == 0, hospital>18 & hospital<= 46) %>%
+  pull(satis) %>%
+  mean()
+
+mean_after_control <- data %>%
+  filter(procedure == 0, hospital>18 & hospital<= 46) %>%
+  pull(satis) %>%
+  mean()
+diff_before <- mean_before_treatment - mean_before_control
+diff_after <- mean_after_treatment - mean_after_control
+
+diff_in_diff <- diff_after - diff_before
+
+sprintf("Mean satisfaction for treated hospitals before treatment: %f" ,mean_before_treatment)
+sprintf("Mean satisfaction for treated hospitals after treatment: %f", mean_after_treatment)
+sprintf("Mean satisfaction for control hospitals before treatment: %f" , mean_before_control)
+sprintf("Mean satisfaction for control hospitals after treatment: %f", mean_after_control)
+sprintf("Difference in difference: %f", diff_in_diff)
+
+
+```
+## Assignment 8.2
+```{r} 
+
+# Linear regression with month and hospital as continuous variables
+model_continuous <- lm(satis ~ month + hospital + procedure, data = data)
+summary(model_continuous)
+
+
+# Linear regression with factors for month and hospital
+model_factors <- lm(satis ~ as.factor(month) + as.factor(hospital) + procedure, data = data)
+summary(model_factors)
+```
+The model using categorical variables for 'month' and 'hospital' demonstrates a better fit explaining 52.99% of the variance in patient satisfaction and improved explanatory power compared to the continuous variable model. Individual hospitals and certain months have significant impacts on patient satisfaction besides the effect of the procedure.

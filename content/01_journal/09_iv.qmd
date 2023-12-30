@@ -2,6 +2,17 @@
 title: "Instrumental Variables"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+# Assignment 9
+
+## Assignment 9.1
+```{r}
+library(Matching)
+library(ggdag)
+library(tidyverse)
+library(dagitty)
+library(MatchIt)
+
+
+data <- readRDS("data/rand_enc.rds")
+data
+```

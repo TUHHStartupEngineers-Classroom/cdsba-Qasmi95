@@ -1,7 +1,72 @@
 ---
 title: "Directed Acyclic Graphs"
 ---
+# Assignment 5
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+```{r}
+# Load necessary libraries
+library(dagitty)
+library(ggdag)
+library(tidyverse)
+```
+## Assignment 5.1
+```{r}
+# Define the DAG for the parking spot example
+parking_dag <- dagify(
+  sales ~ parking_spots,
+  sales ~ location,
+  parking_spots ~ location,
+  coords = list(x = c(sales = 1, parking_spots = 3, location = 2),
+                y = c(sales = 0, parking_spots = 0, location = 1))
+)
+
+
+# Plot the DAG with default ggplot2 theme
+ggdag(parking_dag, text = FALSE) +
+  geom_dag_point() +
+  geom_dag_text(color = "red") +
+  geom_dag_edges(edge_color = "black")
+
+```
+## Assignment 5.2.1
+```{r}
+# Load the data file customer_sat.rds
+data <- readRDS("data/customer_sat.rds")
+
+# 1. Regress satisfaction on follow_ups
+model_1 <- lm(satisfaction ~ follow_ups, data = data)
+
+summary(model_1)
+```
+## Assignment 5.2.2
+```{r}
+# 2. Regress satisfaction on follow_ups and account for subscription
+model_2 <- lm(satisfaction ~ follow_ups + subscription, data = data)
+
+summary(model_2)
+```
+## Assignment 5.3
+According to the first regression, there is a negative relationship between follow_ups and satisfaction, indicating that as the number of follow-up calls increases, so does satisfaction.
+
+The second regression, which takes into account both follow_ups and subscription levels, reveals that, while follow_ups continue to have an impact on satisfaction, subscription levels (Premium and Premium+) also have a significant impact. Furthermore, the subscription level coefficients imply that higher subscription tiers (Premium and Premium+) have a positive impact on satisfaction when compared to some assumed base level (possibly Starter, which is not explicitly included as a variable).
+
+## Assignment 5.4
+```{r}
+# Create a DAG for the relationship between follow-up calls, satisfaction, and subscription
+saas_dag <- dagify(
+  satisfaction ~ follow_ups,
+  satisfaction ~ subscription,
+  follow_ups ~ subscription,
+  coords = list(x = c(satisfaction = 1, follow_ups = 3, subscription = 2),
+                y = c(satisfaction = 0, follow_ups = 0, subscription = 1))
+)
+
+# Plot the DAG 
+ggdag(saas_dag, text = FALSE) +
+  geom_dag_point() +
+  geom_dag_text(color = "red") +
+  geom_dag_edges(edge_color = "black")
+
+
+
+```

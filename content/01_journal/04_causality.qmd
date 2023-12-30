@@ -2,6 +2,35 @@
 title: "Causality"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+# Assignment 4
+```{r}
+#load libraries
+library(ggplot2)
+```
+
+It is common for unrelated variables to appear to be correlated by coincidence. This is known as spurious correlation. The "Spending on science, space, and technology" in the United States is one example of this, as it shows a surprisingly strong correlation with the "Suicides by hanging, strangulation and suffocation" over time. While there is a significant positive correlation between these two variables, there is no causal relationship.
+
+Example taken from (https://tylervigen.com/spurious-correlations)
+
+![Spurious Correlation Example](../../assets/img/Spurious.png)
+Generating random data to show spurious correlation
+```{r}
+# Generating random data
+set.seed(123)
+n <- 100
+x <- rnorm(n)  # Generating random data for variable X
+y <- x + rnorm(n, mean = 0, sd = 0.2)  # Generating Y correlated with X
+
+# Create a dataframe
+data <- data.frame(X = x, Y = y)
+
+# Plotting the spurious correlation using ggplot2
+ggplot(data, aes(x = X, y = Y)) +
+  geom_point() +
+  labs(title = "Spurious Correlation",
+       x = "Variable X",
+       y = "Variable Y") +
+  theme_minimal()
+
+```
+"X" and "Y" are two random variables in this example. Random noise is added to 'X' to generate 'Y', resulting in a correlation between the two. 'X' and 'Y', however, have no meaningful relationship, despite their visual correlation in the plot. This illustrates how unrelated variables can still produce spurious correlations.

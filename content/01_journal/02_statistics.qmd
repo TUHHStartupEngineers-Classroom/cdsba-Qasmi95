@@ -2,6 +2,56 @@
 title: "Statistical Concepts"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+# Assigment 2
+## Assignment 2.1
+```{r}
+#load libraries
+library(dplyr)
+
+# Load the data from random_vars.rds file
+data <- readRDS("data/random_vars.rds")  # Replace 'path_to_your_folder' with the actual path
+
+# View the loaded data
+View(data)
+
+# Compute expected value, variance, and standard deviation for each variable
+summary_stats <- data.frame(
+  Variable = colnames(data),
+  Expected_Value = sapply(data, mean),
+  Variance = sapply(data, var),
+  Standard_Deviation = sapply(data, sd)
+)
+
+# View summary statistics
+summary_stats
+```
+## Assignment 2.2
+Standard deviation provides insights into the variability of individual variables, comparing relationships between 'age' and 'income' would benefit more from measures like covariance and correlation to understand how these variables are related or associated with each other but comparing covariance is not easy. Where as in correlation, we get values between -1 and 1 which provides a standardized measure to interpret the strength and direction of linear relationship between age and income.
+
+## Assignment 2.3
+```{r}
+# Compute expected value, variance, and standard deviation for each variable
+summary_stats <- data.frame(
+  Variable = colnames(data),
+  Covariance = sapply(data, function(x) sapply(data, function(y) cov(x, y))),
+  Correlation = sapply(data, function(x) sapply(data, function(y) cor(x, y)))
+)
+
+# View summary statistics
+summary_stats
+```
+It is easier to interpret correlation as compared to covarience as discussed above.
+
+## Assignment 2.4
+```{r}
+# Calculate conditional expected values for income based on age ranges
+conditional_expected_value <- data %>%
+  summarize(
+    E_income_age_18 = mean(filter(., age <= 18)$income),
+    E_income_age_18_65 = mean(filter(., age >= 18 & age < 65)$income),
+    E_income_age_65 = mean(filter(., age >= 65)$income)
+  )
+
+conditional_expected_value
+```
+

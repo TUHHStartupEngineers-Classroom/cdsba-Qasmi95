@@ -2,6 +2,109 @@
 title: "Regression and Statistical Inference"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+# Assignment 3
+
+## Assignment 3.1
+```{r}
+#load libraries
+library(dplyr)
+library(ggplot2)
+
+#Read the data and check dimensions
+data <- readRDS("data/car_prices.rds")
+dim(data) # Check dimensions - rows and columns
+
+```
+## Assignment 3.2
+```{r}
+#Get a more detailed look at the data
+str(data) # Display structure and data types
+glimpse(data)
+```
+For strings <chr> Character and for numbers <dbl> Double data types are observed
+
+## Assignment 3.3
+```{r}
+#We Run a linear regression 
+model <- lm(price ~ ., data = data[, -20])
+summary(model) # Check regression summary for coefficients, p-values, etc.
+```
+We want to now consider seeing p-values for selecting significant regressors affecting price and we construct a barplot with alpha set to 0.05 and shown with red dotted line. All those variables with p-value greater than 0.05 we don't consider them.
+
+```{r}
+#Extracting p-values of regressors from the summary of the regression model
+p_values <- summary(model)$coefficients[, "Pr(>|t|)"]
+p_values
+# Extracting names of the regressors
+regressor_names <- names(p_values)
+
+# Create a bar plot to visualize the significance of regressors
+barplot(-log10(p_values), 
+        names.arg = regressor_names,
+        main = "Significance of Regressors on Car Prices",
+        xlab = "Regressors",
+        ylab = "-log10(p-value)",
+        col = "lightblue",
+        ylim = c(0, max(-log10(p_values)) * 1.2),
+        las = 2, # Rotate x-axis labels vertically
+        cex.names = 0.7)
+
+# Add a horizontal dashed line at significance level (for example, p = 0.05)
+abline(h = -log10(0.05), lty = 2, col = "red")
+
+
+# Determine significance levels based on p-values
+significance_levels <- ifelse(p_values <= 0.001, "***",
+                              ifelse(p_values <= 0.01, "**",
+                                     ifelse(p_values <= 0.05, "*", "")))
+
+# Filter significant regressors whose p-values are less than 0.05
+significant_regressors <- regressor_names[p_values < 0.05]
+
+# Create a table of significant regressors along with their significance levels
+  significant_table <- data.frame(
+  Regressors = significant_regressors,
+  P_Values = p_values[p_values < 0.05],
+  Significance = significance_levels[p_values < 0.05]
+)
+significant_table
+# Include only significant regressors
+model_imp <- lm(price ~ enginelocation + enginesize + stroke + carwidth + peakrpm, data = data)
+summary(model_imp)
+
+# Extract the coefficients of significant regressors from the regression model summary
+significant_regressors <- c("enginelocationrear", "enginesize", "stroke", "carwidth", "peakrpm")
+
+# Extract the coefficients and variable names
+coefficients <- coef(model)[significant_regressors]
+
+# Create a bar plot to visualize the impact of significant regressors on price
+barplot(coefficients, 
+        main = "Impact of Significant Regressors on Car Prices",
+        xlab = "Regressors",
+        ylab = "Coefficient Estimate",
+        col = "skyblue",
+        ylim = c(min(coefficients) * 1.2, max(coefficients) * 1.2),
+        las = 2, # Rotate x-axis labels vertically
+        beside = TRUE)
+
+# Add labels for the variables
+text(1:length(coefficients), coefficients, labels = round(coefficients, digits = 2), pos = 3, cex = 0.8)
+```
+
+## Assignment 3.4
+Now for this part enginesize is selected based on its p-value (4.887489e-06) and significance and also a positive correletion based on the plot and positive estimate of 125.72 show that as enginesize increases, price also increases. The data type of enginesize is <dbl> double and it is statistically significant since its p-value is less than alpha= 0.05.  
+```{r}
+# Plot relationship between enginesize and price
+ggplot(data, aes(x = enginesize, y = price)) +
+  geom_point(alpha = 0.8)
+
+```
+```{r}
+# Step 5: Add a new variable 'seat_heating' and run regression
+data_with_seat_heating <- data %>% mutate(seat_heating = TRUE)
+model_with_seat_heating <- lm(price ~ ., data = data_with_seat_heating)
+summary(model_with_seat_heating) # Check regression summary for the coefficient of seat_heating
+
+```
+Adding a variable seat_heating to the data and assigning a value TRUE for all observations gave a NA for Estimate coefficient in the new regression model. This new variable has no affect on the price since it is same for all observations.

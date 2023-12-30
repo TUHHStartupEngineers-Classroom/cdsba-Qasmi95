@@ -2,6 +2,75 @@
 title: "Randomized Controlled Trials"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+# Assignment 6
+```{r}
+library(dplyr)
+library(ggplot2)
+```
+
+## Assignment 6.1
+```{r}
+# Loading dataset into 'data'
+data <- readRDS("data/abtest_online.rds")
+str(data)
+
+# Convert non-numeric variables to numeric
+data$mobile_device <- as.numeric(data$mobile_device)
+data$chatbot <- as.numeric(data$chatbot)
+
+# Check covariate balance across groups using a plot 
+covariates <- c("mobile_device", "previous_visit", "purchase", "purchase_amount") # Variables of interest
+group_var <- "chatbot"
+
+# Check covariate balance visually using plots
+plot_balances <- lapply(covariates, function(var) {
+  ggplot(data, aes_string(x = group_var, y = var, color = as.factor(group_var))) +
+    stat_summary(
+      geom = "errorbar", 
+      width = 0.5,
+      fun.data = "mean_se", 
+      fun.args = list(mult = 1.96),
+      show.legend = FALSE
+    ) +
+    labs(title = paste("Covariate Balance for", var))
+})
+plot_balances
+```
+Plots shows in general, covariates are overall balanced when chatbot is True and False. However, when comparing previous_visits plots it can be seen that the CI(Confidence Intervals) overlap with each other.
+
+
+## Assignment 6.2: Running a regression on 'purchase_amount' to find the effect of chatbot on sales
+```{r}
+sales_model <- lm(purchase_amount ~ chatbot, data = data)
+summary(sales_model) # regression summary
+```
+The summary shows that the sales dropped for customers that used the chatbot with the chatbot coefficient value = -7.0756 
+
+## Assignment 6.3: Interaction between 'chatbot' and 'mobile_device' for subgroup effects
+```{r}
+interaction_model <- lm(purchase_amount ~ chatbot * mobile_device, data = data)
+summary(interaction_model) # regression summary (-0.1526 for chatbot:mobile_device)
+
+# Computing CATE for mobile users (subgroup)
+mobile_users <- data[data$mobile_device == 1, ]
+
+# Fit a model for mobile users
+mobile_users_model <- lm(purchase_amount ~ chatbot, data = mobile_users)
+summary(mobile_users_model) # View regression summary
+```
+
+## Assignment 6.4: Run logistic regression for binary outcome 'purchase'
+```{r}
+logistic_model <- glm(purchase ~ chatbot, 
+                      family = binomial(link = 'logit'), data = data)
+summary(logistic_model) # View regression summary
+
+# Now Interpreting the coefficient for 'chatbot'
+# Coefficients here represent log odds ratio. In order to get the odds ratio, coefficient for chatbot is exponentiated.
+exp(coef(logistic_model)["chatbot"]) # Exponentiated coefficient for 'chatbot'
+```
+The odds ratio amount to 0.371 which suggests that the customers are less likely to purchase something with the chatbot
+
+```
+
+

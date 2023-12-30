@@ -2,96 +2,233 @@
 title: "Probability Theory"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
-
-This is a `.qmd` file. It is plain text with special features. Any time you write just like this, it will be compiled to normal text in the website. If you put a \# in front of your text, it will create a top level-header.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
-
-# Text Formatting
-
-*italics* and **bold**
-
-superscript^2^ / subscript~2~
-
-~~strikethrough~~
-
-`verbatim code`
-
-> Blockquote
-
-# Headings
-
-## Header 2
-### Header 3
-#### Header 4
-##### Header 5
-###### Header 6
-
-# Links & Images
-
-<https://quarto.org>
-
-[Quarto](https://quarto.org)
-
-![Caption](../../assets/img/elephant.png)
-
-[![Caption](../../assets/img/elephant.png)](https://quarto.org)
-
-[![Caption](../../assets/img/elephant.png)](https://quarto.org "An elephant")
-
-
-# Lists
-
-* unordered list
-    + sub-item 1
-    + sub-item 2
-        - sub-sub-item 1
-        
-*   item 2
-
-    Continued (indent 4 spaces)
-    
-    
-1. ordered list
-2. item 2
-    i) sub-item 1
-         A.  sub-sub-item 1
-         
-(@)  A list whose numbering
-
-continues after
-
-(@)  an interruption
-
-# Tables
-
-| Right | Left | Default | Center |
-|------:|:-----|---------|:------:|
-|   12  |  12  |    12   |    12  |
-|  123  |  123 |   123   |   123  |
-|    1  |    1 |     1   |     1  |
-
-# Source Code
-
-Use ``` to delimit blocks of source code:
-
-```
-code
+# Assignment 1
+```{r}
+#load libraries
+library(ggVennDiagram)
 ```
 
-Add a language to syntax highlight code blocks:
+Define being on time as event **T**, being not on time as **!T**, having a change in scope as **S** and having no change in scope as **!S** 
+
+Then, compute the following probabilities and the sum of all four probabilities.
+
+
+P(T∩S): Probability of being on time and having a change in scope.
+
+P(T∩!S): Probability of being on time and having no change in scope.
+
+P(!T∩S): Probability of not being on time and having a change in scope.
+
+P(!T∩!S): Probability of not being on time and having no change in scope.
+
+
+
+## Given the following definitions:
+
+
+P(S): Probability of having a change in scope.
+
+P(!S): Probability of having no change in scope.
+
+P(T∣S): Probability of being on time having a change in scope.
+
+P(T∣!S): Probability of being on time having no change in scope.
+
+P(!T∣S): Probability of not being on time having a change in scope.
+
+P(!T∣!S): Probability of not being on time having no change in scope.
+
+
+## The general equations for the Joint probabilities are:
+
+
+P(T∩S)=P(S)×P(T∣S)
+
+P(T∩!S)=P(!S)×P(T∣!S)
+
+P(!T∩S)=P(S)×P(!T∣S)
+
+P(!T∩!S)=P(S)×P(!T∣!S)
+
+
+## Function to calculate probabilities based on provided inputs
 
 ```{r}
-1 + 1
+calculate_probabilities <- function(P_S, P_not_S, P_T_given_S, P_not_T_given_S, P_not_T_and_S, P_not_T_and_not_S) {
+    # Calculate probabilities using the general equations
+    P_T_and_S <- P_S * P_T_given_S
+    P_T_and_not_S <- P_not_S * P_T_given_not_S
+    P_not_T_and_S <- P_S * P_not_T_given_S
+    P_not_T_and_not_S <- P_not_S * P_not_T_given_not_S
+
+    # Calculate the sum of all probabilities
+    sum_all_probabilities <- P_T_and_S + P_T_and_not_S + P_not_T_and_S + P_not_T_and_not_S
+
+    # Return the calculated probabilities and the sum
+    return(list(
+        P_T_and_S = P_T_and_S,
+        P_T_and_not_S = P_T_and_not_S,
+        P_not_T_and_S = P_not_T_and_S,
+        P_not_T_and_not_S = P_not_T_and_not_S,
+        Sum_all_probabilities = sum_all_probabilities
+    ))
+}
 ```
 
+## Now to calculate the probabilities, example values are taken from probability tree to compute the probabilities
+
+![Probability Tree](../../assets/img/01_tree.png)
 ```{r}
-cars
+P_S <- 0.3
+P_not_S <- 0.7
+P_T_given_S <- 0.2
+P_not_T_given_S <- 1 - P_T_given_S
+P_T_given_not_S <- 0.6
+P_not_T_given_not_S <- 1 - P_T_given_not_S
 ```
+## Calculating probabilities using the function
+```{r}
+probabilities <- calculate_probabilities(P_S, P_not_S, P_T_given_S, P_not_T_given_S, P_T_given_not_S, P_not_T_given_not_S)
+```
+## Calculating joint probabilities and sum of all probabilities
+```{r}
+probabilities$P_T_and_S  #P(T∩S)
+probabilities$P_T_and_not_S #P(T∩!S)
+probabilities$P_not_T_and_S #P(!T∩S)
+probabilities$P_not_T_and_not_S #P(!T∩!S)
+probabilities$Sum_all_probabilities # P(T∩S) + P(T∩!S) + P(!T∩S) + P(!T∩!S)
+```
+# Assignment 2
+
+## Venn Diagram Code
 
 ```{r}
-plot(cars)
+# Number of obervations
+n <- 1000
+
+# Create tibble
+app_usage <- tibble(
+  # Create user_id in increasing order
+  user_id = 1:n,
+  # Randomly sample if smartphone was used
+  smartphone = rbinom(n, 1, 0.4),
+  # Sample if tablet was used. More likely if smartphone was not used.
+  tablet = ifelse(smartphone == 1, rbinom(n, 1, 0.2), rbinom(n, 1, 0.5)),
+  # Sample if computer was used. More likely if tablet was not used.
+  computer = ifelse(tablet == 1, rbinom(n, 1, 0.1), rbinom(n, 1, 0.3))
+)
+
+# If no device has value of 1, we set smartphone to 1
+app_usage <- app_usage %>%
+  rowwise() %>% 
+  mutate(smartphone = ifelse(sum(smartphone, tablet, computer) == 0, 1, smartphone))
+
+head(app_usage, 10)
+# Show column sums
+colSums(app_usage)
+
+# Equivalent commands to select specific columns
+#colSums(app_usage[, 2:4])
+#colSums(app_usage[, c("smartphone", "tablet", "computer")])
+app_usage %>% select(smartphone, tablet, computer) %>% colSums()
+
+# Set of phone, tablet and computer users
+set_phon <- which(app_usage$smartphone == 1)
+set_tabl <- which(app_usage$tablet == 1)
+set_comp <- which(app_usage$computer == 1)
+
+# List of all sets
+sets_all <- list(set_phon, set_tabl, set_comp)
+
+# Load additional package for plotting Venn diagrams
+
+# Plot Venn diagram
+ggVennDiagram(sets_all, category.names = c("Smartphone", "Tablet", "Computer"),
+              label_percent_digit = 2) +
+  # Customizing appearance
+  theme(legend.position = "none", 
+        panel.background = element_rect("grey"),
+        strip.background = element_rect("grey")) +
+  scale_x_continuous(expand = expansion(mult = .24))
+
+# List of all sets
+sets_all <- list(set_phon, set_tabl, set_comp)
+# Percentage of customers using all three devices
+customers_using_all_three <- Reduce(intersect, sets_all)
+percentage_using_all_three <- length(customers_using_all_three) / n * 100
+
+
+
+# Customers using at least two devices
+customers_using_at_least_two <- (length(Reduce(intersect, sets_all[c(1, 3)])) +
+                                 length(Reduce(intersect, sets_all[c(1, 2)])) +
+                                 length(Reduce(intersect, sets_all[c(2, 3)])) -
+                                 2 * length(customers_using_all_three))
+
+percentage_using_at_least_two <- customers_using_at_least_two / n * 100
+
+# Customers using only one device
+customers_using_only_one <- (length(set_phon) + length(set_tabl) + length(set_comp) -
+                              2 * length(Reduce(intersect, sets_all[c(1, 3)])) -
+                              2 * length(Reduce(intersect, sets_all[c(1, 2)])) -
+                              2 * length(Reduce(intersect, sets_all[c(2, 3)])) +
+                              3 * length(customers_using_all_three))
+
+percentage_using_only_one <- customers_using_only_one / n * 100
+
+
 ```
+## Answers generated from the above Venn diagram
+```{r}
+# Percentage of customers using all three devices (A∩B∩C)/n
+percentage_using_all_three
+# Percentage of customers using at least two devices ((A∩B)+(A∩C)+(B∩C)-2*(A∩B∩C))/n
+percentage_using_at_least_two
+# Percentage of customers using only one device (|A|+|B|+|C|-2*(A∩B)-2*(A∩C)-2*(B∩C)+3*(A∩B∩C))/n
+percentage_using_only_one
+```
+![Course Website Venn Diagram](../../assets/img/Venn.png)
+
+## Answers generated from the Course Website's Venn diagram
+Percentage of customers using all three devices = 0.5
+
+Percentage of customers using at least two devices = 19.9
+
+Percentage of customers using only one device = 80.1
+
+
+# Assignment 3
+## Given the following definitions:
+
+A: Product is faulty vs !A: Product is flawless
+
+B: Alarm is triggered vs !B: No Alarm
+
+P(A): Probability of product being faulty
+
+P(B∣A): Probability of alarm being triggered when product is faulty.
+
+P(B∣!A): Probability of alarm being triggered when product is flawless.
+
+```{r}
+P_A <- 0.04
+P_not_A <- 1 - P_A
+P_B_given_A <- 0.97
+P_B_given_not_A <- 0.01
+
+
+# For P(!A|B) and P(A|B) we use Bayes' theorem but for that we need to find P(B) first which is the probability of alarm being triggered:
+
+P_B <- (P_B_given_A*P_A) + (P_B_given_not_A*P_not_A)
+
+P_not_A_given_B <- (P_B_given_not_A*P_not_A)/P_B
+
+P_not_A_given_B
+
+
+P_A_given_B <- (P_B_given_A*P_A)/P_B
+
+P_A_given_B
+
+```
+These results show that in case the alarm is triggered, there is a possibility of about 19.83 % that the product is flawless and a probability of 80.16 % that the product is faulty.

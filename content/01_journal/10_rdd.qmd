@@ -2,6 +2,129 @@
 title: "Regression Discontinuity"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+
+# Assignment 10
+
+## Assignment 10.1
+```{r}
+#load libraries
+library(ggplot2)
+library(dplyr)
+library(rddensity)
+library(tidyverse)
+
+# Read data for coupon.rds
+df <- readRDS("data/coupon.rds")
+
+# Define cut-off
+c0 <- 60
+bw<- c0+c(-2.5,2.5)
+df
+
+# [2.2] Random assignment test for half bandwidth ----
+ggplot(df, aes(x = days_since_last, fill = coupon)) +
+  geom_histogram(binwidth = 4, color = "white", alpha = 0.6) +
+  geom_vline(xintercept = c0 - 30, color = "red", linetype = "dashed") + # Half bandwidth
+  scale_fill_discrete(labels = c("No coupon", "Coupon")) +
+  xlab("Days since last purchase") +
+  ylab("Number of customers") +
+  theme(legend.title = element_blank())
+
+
+# [3.2] LATE for half bandwidth ----
+df_below_half <- df %>% filter(days_since_last >= bw[1] & days_since_last < c0)
+df_above_half <- df %>% filter(days_since_last >= c0 & days_since_last <= bw[2])
+
+model_below_half <- lm(purchase_after ~ days_since_last, data = df_below_half)
+model_above_half <- lm(purchase_after ~ days_since_last, data = df_above_half)
+
+pred_below_half <- predict(model_below_half, tibble(days_since_last = c0))
+pred_above_half <- predict(model_above_half, tibble(days_since_last = c0))
+
+late_half <- pred_above_half - pred_below_half
+sprintf("LATE with half bandwidth: %.2f", late_half)
+
+# [4.1] Estimation with half bandwidth ----
+lm_bw_half <- lm(purchase_after ~ days_since_last, data = df)
+summary(lm_bw_half)
+ggplot(df, aes(x = days_since_last, y = purchase_after)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +
+  geom_vline(xintercept = c0 - 30, linetype = "dashed", color = "red") + # Half bandwidth
+  xlab("Days since last purchase") +
+  ylab("Purchase after campaign") +
+  ggtitle("Regression lines for half bandwidth")
+
+```
+## Assignment 10.2
+```{r}
+# [2.2] Random assignment test for double bandwidth ----
+ggplot(df, aes(x = days_since_last, fill = coupon)) +
+  geom_histogram(binwidth = 4, color = "white", alpha = 0.6) +
+  geom_vline(xintercept = c0 + 30, color = "red", linetype = "dashed") + # Double bandwidth
+  scale_fill_discrete(labels = c("No coupon", "Coupon")) +
+  xlab("Days since last purchase") +
+  ylab("Number of customers") +
+  theme(legend.title = element_blank())
+
+# [3.2] LATE for double bandwidth ----
+bw <- c0+c(-10,10)
+df_below_double <- df %>% filter(days_since_last >= bw[1] & days_since_last < c0)
+df_above_double <- df %>% filter(days_since_last >= c0 & days_since_last <= bw[2])
+
+model_below_double <- lm(purchase_after ~ days_since_last, data = df_below_double)
+model_above_double <- lm(purchase_after ~ days_since_last, data = df_above_double)
+
+pred_below_double <- predict(model_below_double, tibble(days_since_last = c0))
+pred_above_double <- predict(model_above_double, tibble(days_since_last = c0))
+
+late_double <- mean(pred_above_double) - mean(pred_below_double)
+sprintf("LATE with double bandwidth: %.2f", late_double)
+
+# [4.1] Estimation with double bandwidth ----
+lm_bw_double <- lm(purchase_after ~ days_since_last, data = df)
+summary(lm_bw_double)
+ggplot(df, aes(x = days_since_last, y = purchase_after)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +
+  geom_vline(xintercept = c0 + 30, linetype = "dashed", color = "red") + # Double bandwidth
+  xlab("Days since last purchase") +
+  ylab("Purchase after campaign") +
+  ggtitle("Regression lines for double bandwidth")
+
+```
+After running the analysis it was noticed that making the bandwidth half resulted in LATE value of 7.53. Where as, doubling the bandwidth resulted in a higher LATE value of 9.51.
+
+## Assignment 10.3
+
+```{r}
+# Read data for shipping.rds
+shipping_df <- readRDS("data/shipping.rds")
+shipping_df
+
+# Plot to evaluate 'purchase_amount' as a running variable with a cutoff at 30€
+ggplot(shipping_df, aes(x = purchase_amount, fill = purchase_amount > 30)) +
+  geom_histogram(binwidth = 5, color = "white", alpha = 0.6) +
+  scale_fill_manual(values = c("blue", "red"), labels = c("<= 30€", "> 30€")) +
+  geom_vline(xintercept = 30, linetype = "dashed", color = "black") +
+  xlab("Purchase Amount (€)") +
+  ylab("Number of Purchases") +
+  theme(legend.title = element_blank())
+```
+For RDD to deliver valid results we have to make sure there is no non-random heaping at the cut-off, i.e. no manipulation because for example the effect is known and units attempt to move to one side of the cut-off. We can plot the distribution around the cut-off to check for violations of the continuity assumption.
+
+We can see that there is indeed decline or incline at the cut-off and therefore we cannot assume that the continuity assumption holds.
+
+To check the continuity assumption more thoroughly, we can also use functions of the rddensity package
+
+```{r}
+# Density test
+# Check for continuous density along running variable. Manipulations could 
+# lead to running variable being "crowded" right after cutoff.
+rddd <- rddensity(shipping_df$purchase_amount, c = 30)
+summary(rddd)
+
+# Visually check continuity at running variable
+rdd_plot <- rdplotdensity(rddd, shipping_df$purchase_amount, plotN = 100)
+```
+The plot confirms our assumption. we can see that the confidence intervals do not overlap. Since they do not overlap, we would have to suspect some kind of manipulation around the cut-off and could not use RDD to obtain valid results.

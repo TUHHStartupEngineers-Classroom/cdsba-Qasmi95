@@ -1,7 +1,161 @@
 ---
 title: "Matching and Subclassification"
 ---
+```{r}
+# Load necessary libraries
+library(tidyverse)
+library(Matching)
+library(MatchIt)
+library(dagitty)
+library(ggdag)
+library(GGally)
+library(dplyr)
+```
+## Assignment 7.1
+```{r}
+# Load the data file membership.rds
+data <- readRDS("data/membership.rds")
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+# Explore the structure and summary of the data
+str(data)
+summary(data)
+# Compute the correlation and correlation matrix
+correlations <- cor(data)
+correlations
+correlation_matrix <- cor(data)
+
+# Plot the correlation matrix as a heatmap
+heatmap(correlation_matrix, 
+        Colv = NA, Rowv = NA,
+        col = colorRampPalette(c("blue", "white", "red"))(100),
+        cexRow = 0.8, cexCol = 0.8,  # Adjust label size
+        las = 2)
+
+ggpairs(data, 
+        columns = 1:4,  # Select specific columns if needed
+        lower = list(continuous = "points", aes(color = card)),  # Customize aesthetics for lower cells
+        diag = list(continuous = "barDiag"))  # Customize diagonal cells
+
+
+```
+### Strong Positive Correlations:
+pre_avg_purch and avg_purch have a strong positive correlation of 0.8558. age and pre_avg_purch exhibit a relatively strong positive correlation of 0.5175. avg_purch and age show a moderate positive correlation of 0.4486.
+
+### Moderate Correlations:
+card and avg_purch have a moderate positive correlation of 0.3824. card and age show a weaker positive correlation of 0.1055.
+
+### Weak Correlations:
+sex doesn't exhibit significant correlations with other variables (all correlations are close to zero).
+```{r}
+# Define the DAG based on above observation
+membership_dag <- dagify(
+  avg_purch ~ pre_avg_purch,
+  card ~ age,
+  avg_purch ~ card,
+  pre_avg_purch ~ age,
+  avg_purch ~ age,
+  coords = list(x = c(avg_purch = 1, pre_avg_purch = 2, card = 3, age = 4),
+                y = c(avg_purch = 0, pre_avg_purch = 1, card = 0, age = 1))
+)
+
+# Plot the DAG 
+ggdag(membership_dag, text = FALSE) +
+  geom_dag_point() +
+  geom_dag_text(color = "red") +
+  geom_dag_edges(edge_color = "black")
+
+```
+## Assignment 7.2
+```{r}
+treatment_group <- subset(data, card == 1)  
+control_group <- subset(data, card == 0)    
+
+# Calculate Average Outcome for Each Group
+avg_outcome_treatment <- mean(treatment_group$avg_purch)  
+avg_outcome_control <- mean(control_group$avg_purch)     
+
+# Compute ATE
+ATE <- avg_outcome_treatment - avg_outcome_control
+
+# Print the ATE
+print(paste("Average Treatment Effect (ATE):", ATE))
+```
+## Assignment 7.3.1
+```{r}
+
+# (Coarsened) Exact Matching
+# Without specifying coarsening
+# (1) Matching
+cem <- matchit(card ~ age + pre_avg_purch,
+               data = data, 
+               method = 'cem', 
+               estimand = 'ATE')
+
+summary(cem)
+# Use matched data
+data_cem <- match.data(cem)
+
+# (2) Estimation
+model_cem <- lm(avg_purch ~ card, data = data_cem, weights = weights)
+summary(model_cem)
+```
+The precise estimate using (Coarsened) Exact Matching for Card was found to be 15.2687
+
+## Assignment 7.3.2
+```{r}
+# NN matching
+# replace: one-to-one or one-to-many matching
+# (1) Matching
+nn <- matchit(card ~ age + pre_avg_purch,
+              data = data,
+              method = "nearest",
+              distance = "mahalanobis", 
+              replace = TRUE)
+
+summary(nn)
+# Use matched data
+data_nn <- match.data(nn)
+
+# (2) Estimation
+model_nn <- lm(avg_purch ~ card, data = data_nn, weights = weights)
+summary(model_nn)
+```
+The precise estimate using Nearest Neighbor Matching for Card was found to be 14.9524
+
+## Assignment 7.3.3
+```{r}
+#Inverse Probability Weighting
+# (1) Propensity scores
+model_prop <- glm(card ~ age + pre_avg_purch,
+                  data = data,
+                  family = binomial(link = "logit"))
+summary(model_prop)
+# Add propensities to table
+df_aug <- data %>% mutate(propensity = predict(model_prop, type = "response"))
+# Extend data by IPW scores
+df_ipw <- df_aug %>% mutate(
+  ipw = (card/propensity) + ((1-card) / (1-propensity)))
+# Look at data with IPW scores
+selected_columns <- df_ipw[c("age", "pre_avg_purch", "card", "propensity", "ipw")]
+selected_columns
+
+# (2) Estimation
+model_ipw <- lm(avg_purch ~ card,
+                data = df_ipw, 
+                weights = ipw)
+summary(model_ipw)
+# Plot histogram of estimated propensities
+ggplot(df_aug, aes(x = propensity)) +
+  geom_histogram(alpha = .8, color = "white")
+
+# Looking for observations with highest weights
+df_ipw %>% mutate(card, age, pre_avg_purch, propensity, ipw) %>% 
+  arrange(desc(ipw))
+
+# Run with high weights excluded
+model_ipw_trim <- lm(avg_purch ~ card,
+                data = df_ipw %>% filter(propensity %>% between(0.15, 0.85)),
+                weights = ipw)
+summary(model_ipw_trim)
+```
+The precise estimate using Inverse Probability Weighting for Card was found to be 14.9548

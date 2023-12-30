@@ -1,0 +1,18 @@
+{
+  "hash": "1e0e1302757247e3b2774502f2e2e2eb",
+  "result": {
+    "markdown": "---\ntitle: \"Causality\"\n---\n\n\n# Assignment 4\n\n::: {.cell hash='04_causality_cache/html/unnamed-chunk-1_d562229e44ffe9d1526878d627ddae35'}\n\n```{.r .cell-code}\n#load libraries\nlibrary(ggplot2)\n```\n:::\n\n\nIt is common for unrelated variables to appear to be correlated by coincidence. This is known as spurious correlation. The \"Spending on science, space, and technology\" in the United States is one example of this, as it shows a surprisingly strong correlation with the \"Suicides by hanging, strangulation and suffocation\" over time. While there is a significant positive correlation between these two variables, there is no causal relationship.\n\nExample taken from (https://tylervigen.com/spurious-correlations)\n\n![Spurious Correlation Example](../../assets/img/Spurious.png)\nGenerating random data to show spurious correlation\n\n::: {.cell hash='04_causality_cache/html/unnamed-chunk-2_47e710e3dc4bede802b926152911c32c'}\n\n```{.r .cell-code}\n# Generating random data\nset.seed(123)\nn <- 100\nx <- rnorm(n)  # Generating random data for variable X\ny <- x + rnorm(n, mean = 0, sd = 0.2)  # Generating Y correlated with X\n\n# Create a dataframe\ndata <- data.frame(X = x, Y = y)\n\n# Plotting the spurious correlation using ggplot2\nggplot(data, aes(x = X, y = Y)) +\n  geom_point() +\n  labs(title = \"Spurious Correlation\",\n       x = \"Variable X\",\n       y = \"Variable Y\") +\n  theme_minimal()\n```\n\n::: {.cell-output-display}\n![](04_causality_files/figure-html/unnamed-chunk-2-1.png){width=672}\n:::\n:::\n\n\"X\" and \"Y\" are two random variables in this example. Random noise is added to 'X' to generate 'Y', resulting in a correlation between the two. 'X' and 'Y', however, have no meaningful relationship, despite their visual correlation in the plot. This illustrates how unrelated variables can still produce spurious correlations.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<link href=\"../../site_libs/pagedtable-1.1/css/pagedtable.css\" rel=\"stylesheet\" />\r\n<script src=\"../../site_libs/pagedtable-1.1/js/pagedtable.js\"></script>\r\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
