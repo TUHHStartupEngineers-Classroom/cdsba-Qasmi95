@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Oliver Mork">
+<meta name="author" content="Muhammad Ahmed Qasmi">
 
 <title>MyLabJournal - Regression and Statistical Inference</title>
 <style>
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -43,6 +77,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -63,6 +100,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+
+<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
 </head>
@@ -148,7 +188,19 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#assignment-3" id="toc-assignment-3" class="nav-link active" data-scroll-target="#assignment-3"><span class="header-section-number">1</span> Assignment 3</a>
+  <ul class="collapse">
+  <li><a href="#assignment-3.1" id="toc-assignment-3.1" class="nav-link" data-scroll-target="#assignment-3.1"><span class="header-section-number">1.1</span> Assignment 3.1</a></li>
+  <li><a href="#assignment-3.2" id="toc-assignment-3.2" class="nav-link" data-scroll-target="#assignment-3.2"><span class="header-section-number">1.2</span> Assignment 3.2</a></li>
+  <li><a href="#assignment-3.3" id="toc-assignment-3.3" class="nav-link" data-scroll-target="#assignment-3.3"><span class="header-section-number">1.3</span> Assignment 3.3</a></li>
+  <li><a href="#assignment-3.4" id="toc-assignment-3.4" class="nav-link" data-scroll-target="#assignment-3.4"><span class="header-section-number">1.4</span> Assignment 3.4</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -165,7 +217,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Oliver Mork </p>
+             <p>Muhammad Ahmed Qasmi </p>
           </div>
   </div>
     
@@ -176,21 +228,362 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<section id="assignment-3" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Assignment 3</h1>
+<section id="assignment-3.1" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="assignment-3.1"><span class="header-section-number">1.1</span> Assignment 3.1</h2>
+<div class="cell" data-hash="03_regression_cache/html/unnamed-chunk-1_4b5228d361f1bf5b9aec3a9a38a3e8cb">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#load libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co">#Read the data and check dimensions</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/car_prices.rds"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">dim</span>(data) <span class="co"># Check dimensions - rows and columns</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 181  22</code></pre>
 </div>
-<div class="callout-title-container flex-fill">
-Note
+</div>
+</section>
+<section id="assignment-3.2" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="assignment-3.2"><span class="header-section-number">1.2</span> Assignment 3.2</h2>
+<div class="cell" data-hash="03_regression_cache/html/unnamed-chunk-2_17f59834ff37e863a587d70bf17e2f3f">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">#Get a more detailed look at the data</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">str</span>(data) <span class="co"># Display structure and data types</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; tibble [181 × 22] (S3: tbl_df/tbl/data.frame)
+#&gt;  $ aspiration      : chr [1:181] "std" "std" "std" "std" ...
+#&gt;  $ doornumber      : chr [1:181] "two" "two" "two" "four" ...
+#&gt;  $ carbody         : chr [1:181] "convertible" "convertible" "hatchback" "sedan" ...
+#&gt;  $ drivewheel      : chr [1:181] "rwd" "rwd" "rwd" "fwd" ...
+#&gt;  $ enginelocation  : chr [1:181] "front" "front" "front" "front" ...
+#&gt;  $ wheelbase       : num [1:181] 88.6 88.6 94.5 99.8 99.4 ...
+#&gt;  $ carlength       : num [1:181] 169 169 171 177 177 ...
+#&gt;  $ carwidth        : num [1:181] 64.1 64.1 65.5 66.2 66.4 66.3 71.4 71.4 71.4 67.9 ...
+#&gt;  $ carheight       : num [1:181] 48.8 48.8 52.4 54.3 54.3 53.1 55.7 55.7 55.9 52 ...
+#&gt;  $ curbweight      : num [1:181] 2548 2548 2823 2337 2824 ...
+#&gt;  $ enginetype      : chr [1:181] "dohc" "dohc" "ohcv" "ohc" ...
+#&gt;  $ cylindernumber  : chr [1:181] "four" "four" "six" "four" ...
+#&gt;  $ enginesize      : num [1:181] 130 130 152 109 136 136 136 136 131 131 ...
+#&gt;  $ fuelsystem      : chr [1:181] "mpfi" "mpfi" "mpfi" "mpfi" ...
+#&gt;  $ boreratio       : num [1:181] 3.47 3.47 2.68 3.19 3.19 3.19 3.19 3.19 3.13 3.13 ...
+#&gt;  $ stroke          : num [1:181] 2.68 2.68 3.47 3.4 3.4 3.4 3.4 3.4 3.4 3.4 ...
+#&gt;  $ compressionratio: num [1:181] 9 9 9 10 8 8.5 8.5 8.5 8.3 7 ...
+#&gt;  $ horsepower      : num [1:181] 111 111 154 102 115 110 110 110 140 160 ...
+#&gt;  $ peakrpm         : num [1:181] 5000 5000 5000 5500 5500 5500 5500 5500 5500 5500 ...
+#&gt;  $ citympg         : num [1:181] 21 21 19 24 18 19 19 19 17 16 ...
+#&gt;  $ highwaympg      : num [1:181] 27 27 26 30 22 25 25 25 20 22 ...
+#&gt;  $ price           : num [1:181] 13495 16500 16500 13950 17450 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">glimpse</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; Rows: 181
+#&gt; Columns: 22
+#&gt; $ aspiration       &lt;chr&gt; "std", "std", "std", "std", "std", "std", "std", "std…
+#&gt; $ doornumber       &lt;chr&gt; "two", "two", "two", "four", "four", "two", "four", "…
+#&gt; $ carbody          &lt;chr&gt; "convertible", "convertible", "hatchback", "sedan", "…
+#&gt; $ drivewheel       &lt;chr&gt; "rwd", "rwd", "rwd", "fwd", "4wd", "fwd", "fwd", "fwd…
+#&gt; $ enginelocation   &lt;chr&gt; "front", "front", "front", "front", "front", "front",…
+#&gt; $ wheelbase        &lt;dbl&gt; 88.6, 88.6, 94.5, 99.8, 99.4, 99.8, 105.8, 105.8, 105…
+#&gt; $ carlength        &lt;dbl&gt; 168.8, 168.8, 171.2, 176.6, 176.6, 177.3, 192.7, 192.…
+#&gt; $ carwidth         &lt;dbl&gt; 64.1, 64.1, 65.5, 66.2, 66.4, 66.3, 71.4, 71.4, 71.4,…
+#&gt; $ carheight        &lt;dbl&gt; 48.8, 48.8, 52.4, 54.3, 54.3, 53.1, 55.7, 55.7, 55.9,…
+#&gt; $ curbweight       &lt;dbl&gt; 2548, 2548, 2823, 2337, 2824, 2507, 2844, 2954, 3086,…
+#&gt; $ enginetype       &lt;chr&gt; "dohc", "dohc", "ohcv", "ohc", "ohc", "ohc", "ohc", "…
+#&gt; $ cylindernumber   &lt;chr&gt; "four", "four", "six", "four", "five", "five", "five"…
+#&gt; $ enginesize       &lt;dbl&gt; 130, 130, 152, 109, 136, 136, 136, 136, 131, 131, 108…
+#&gt; $ fuelsystem       &lt;chr&gt; "mpfi", "mpfi", "mpfi", "mpfi", "mpfi", "mpfi", "mpfi…
+#&gt; $ boreratio        &lt;dbl&gt; 3.47, 3.47, 2.68, 3.19, 3.19, 3.19, 3.19, 3.19, 3.13,…
+#&gt; $ stroke           &lt;dbl&gt; 2.68, 2.68, 3.47, 3.40, 3.40, 3.40, 3.40, 3.40, 3.40,…
+#&gt; $ compressionratio &lt;dbl&gt; 9.00, 9.00, 9.00, 10.00, 8.00, 8.50, 8.50, 8.50, 8.30…
+#&gt; $ horsepower       &lt;dbl&gt; 111, 111, 154, 102, 115, 110, 110, 110, 140, 160, 101…
+#&gt; $ peakrpm          &lt;dbl&gt; 5000, 5000, 5000, 5500, 5500, 5500, 5500, 5500, 5500,…
+#&gt; $ citympg          &lt;dbl&gt; 21, 21, 19, 24, 18, 19, 19, 19, 17, 16, 23, 23, 21, 2…
+#&gt; $ highwaympg       &lt;dbl&gt; 27, 27, 26, 30, 22, 25, 25, 25, 20, 22, 29, 29, 28, 2…
+#&gt; $ price            &lt;dbl&gt; 13495.00, 16500.00, 16500.00, 13950.00, 17450.00, 152…</code></pre>
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<p>You can delete everything in here and start fresh.</p>
+<p>For strings <chr> Character and for numbers <dbl> Double data types are observed</dbl></chr></p>
+</section>
+<section id="assignment-3.3" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="assignment-3.3"><span class="header-section-number">1.3</span> Assignment 3.3</h2>
+<div class="cell" data-hash="03_regression_cache/html/unnamed-chunk-3_b62b47aa785136a20601f885d85ea4c5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">#We Run a linear regression </span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(price <span class="sc">~</span> ., <span class="at">data =</span> data[, <span class="sc">-</span><span class="dv">20</span>])</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="fu">summary</span>(model) <span class="co"># Check regression summary for coefficients, p-values, etc.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; Call:
+#&gt; lm(formula = price ~ ., data = data[, -20])
+#&gt; 
+#&gt; Residuals:
+#&gt;     Min      1Q  Median      3Q     Max 
+#&gt; -5715.4 -1192.9   -27.4   828.6  8978.4 
+#&gt; 
+#&gt; Coefficients:
+#&gt;                        Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept)          -3.553e+04  1.536e+04  -2.313 0.022149 *  
+#&gt; aspirationturbo       1.797e+03  1.035e+03   1.736 0.084626 .  
+#&gt; doornumbertwo         2.242e+02  5.695e+02   0.394 0.694471    
+#&gt; carbodyhardtop       -3.676e+03  1.421e+03  -2.587 0.010669 *  
+#&gt; carbodyhatchback     -3.338e+03  1.235e+03  -2.702 0.007710 ** 
+#&gt; carbodysedan         -2.296e+03  1.353e+03  -1.697 0.091801 .  
+#&gt; carbodywagon         -3.444e+03  1.486e+03  -2.317 0.021887 *  
+#&gt; drivewheelfwd        -4.314e+02  1.066e+03  -0.405 0.686166    
+#&gt; drivewheelrwd        -1.558e+01  1.265e+03  -0.012 0.990190    
+#&gt; enginelocationrear    6.858e+03  2.535e+03   2.705 0.007659 ** 
+#&gt; wheelbase            -3.977e+01  9.086e+01  -0.438 0.662247    
+#&gt; carlength            -2.392e+01  5.042e+01  -0.474 0.635924    
+#&gt; carwidth              7.244e+02  2.436e+02   2.974 0.003444 ** 
+#&gt; carheight             1.163e+02  1.337e+02   0.870 0.385828    
+#&gt; curbweight            2.621e+00  1.776e+00   1.475 0.142293    
+#&gt; enginetypedohcv      -7.913e+03  4.595e+03  -1.722 0.087168 .  
+#&gt; enginetypel           1.101e+03  1.768e+03   0.623 0.534398    
+#&gt; enginetypeohc         3.440e+03  9.141e+02   3.764 0.000243 ***
+#&gt; enginetypeohcf        8.991e+02  1.616e+03   0.556 0.578818    
+#&gt; enginetypeohcv       -6.170e+03  1.230e+03  -5.018 1.52e-06 ***
+#&gt; cylindernumberfive   -1.154e+04  2.992e+03  -3.856 0.000173 ***
+#&gt; cylindernumberfour   -1.135e+04  3.147e+03  -3.605 0.000429 ***
+#&gt; cylindernumbersix    -6.918e+03  2.200e+03  -3.144 0.002023 ** 
+#&gt; cylindernumberthree  -4.249e+03  4.676e+03  -0.909 0.365015    
+#&gt; cylindernumbertwelve -1.101e+04  4.181e+03  -2.633 0.009386 ** 
+#&gt; enginesize            1.257e+02  2.647e+01   4.749 4.89e-06 ***
+#&gt; fuelsystem2bbl        2.203e+02  8.779e+02   0.251 0.802254    
+#&gt; fuelsystemmfi        -3.116e+03  2.567e+03  -1.214 0.226855    
+#&gt; fuelsystemmpfi        4.302e+02  9.905e+02   0.434 0.664720    
+#&gt; fuelsystemspdi       -2.523e+03  1.360e+03  -1.856 0.065553 .  
+#&gt; fuelsystemspfi        5.316e+02  2.493e+03   0.213 0.831430    
+#&gt; boreratio            -1.219e+03  1.630e+03  -0.748 0.455731    
+#&gt; stroke               -4.583e+03  9.148e+02  -5.009 1.58e-06 ***
+#&gt; compressionratio     -7.785e+02  5.495e+02  -1.417 0.158716    
+#&gt; horsepower            1.139e+01  2.256e+01   0.505 0.614476    
+#&gt; peakrpm               2.522e+00  6.325e-01   3.988 0.000105 ***
+#&gt; highwaympg            7.601e+01  8.220e+01   0.925 0.356679    
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Residual standard error: 2184 on 144 degrees of freedom
+#&gt; Multiple R-squared:  0.9414, Adjusted R-squared:  0.9267 
+#&gt; F-statistic: 64.24 on 36 and 144 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
+<p>We want to now consider seeing p-values for selecting significant regressors affecting price and we construct a barplot with alpha set to 0.05 and shown with red dotted line. All those variables with p-value greater than 0.05 we don’t consider them.</p>
+<div class="cell" data-hash="03_regression_cache/html/unnamed-chunk-4_84a73e398236271756f547e142ed9b88">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">#Extracting p-values of regressors from the summary of the regression model</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>p_values <span class="ot">&lt;-</span> <span class="fu">summary</span>(model)<span class="sc">$</span>coefficients[, <span class="st">"Pr(&gt;|t|)"</span>]</span>
+<span id="cb9-3"><a href="#cb9-3"></a>p_values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;          (Intercept)      aspirationturbo        doornumbertwo 
+#&gt;         2.214873e-02         8.462557e-02         6.944711e-01 
+#&gt;       carbodyhardtop     carbodyhatchback         carbodysedan 
+#&gt;         1.066928e-02         7.710289e-03         9.180131e-02 
+#&gt;         carbodywagon        drivewheelfwd        drivewheelrwd 
+#&gt;         2.188745e-02         6.861656e-01         9.901899e-01 
+#&gt;   enginelocationrear            wheelbase            carlength 
+#&gt;         7.658904e-03         6.622471e-01         6.359238e-01 
+#&gt;             carwidth            carheight           curbweight 
+#&gt;         3.443999e-03         3.858277e-01         1.422933e-01 
+#&gt;      enginetypedohcv          enginetypel        enginetypeohc 
+#&gt;         8.716763e-02         5.343980e-01         2.431410e-04 
+#&gt;       enginetypeohcf       enginetypeohcv   cylindernumberfive 
+#&gt;         5.788177e-01         1.518253e-06         1.731842e-04 
+#&gt;   cylindernumberfour    cylindernumbersix  cylindernumberthree 
+#&gt;         4.293199e-04         2.022597e-03         3.650153e-01 
+#&gt; cylindernumbertwelve           enginesize       fuelsystem2bbl 
+#&gt;         9.386403e-03         4.887489e-06         8.022540e-01 
+#&gt;        fuelsystemmfi       fuelsystemmpfi       fuelsystemspdi 
+#&gt;         2.268549e-01         6.647200e-01         6.555294e-02 
+#&gt;       fuelsystemspfi            boreratio               stroke 
+#&gt;         8.314303e-01         4.557306e-01         1.576896e-06 
+#&gt;     compressionratio           horsepower              peakrpm 
+#&gt;         1.587161e-01         6.144755e-01         1.054750e-04 
+#&gt;           highwaympg 
+#&gt;         3.566786e-01</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Extracting names of the regressors</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>regressor_names <span class="ot">&lt;-</span> <span class="fu">names</span>(p_values)</span>
+<span id="cb11-3"><a href="#cb11-3"></a></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="co"># Create a bar plot to visualize the significance of regressors</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="fu">barplot</span>(<span class="sc">-</span><span class="fu">log10</span>(p_values), </span>
+<span id="cb11-6"><a href="#cb11-6"></a>        <span class="at">names.arg =</span> regressor_names,</span>
+<span id="cb11-7"><a href="#cb11-7"></a>        <span class="at">main =</span> <span class="st">"Significance of Regressors on Car Prices"</span>,</span>
+<span id="cb11-8"><a href="#cb11-8"></a>        <span class="at">xlab =</span> <span class="st">"Regressors"</span>,</span>
+<span id="cb11-9"><a href="#cb11-9"></a>        <span class="at">ylab =</span> <span class="st">"-log10(p-value)"</span>,</span>
+<span id="cb11-10"><a href="#cb11-10"></a>        <span class="at">col =</span> <span class="st">"lightblue"</span>,</span>
+<span id="cb11-11"><a href="#cb11-11"></a>        <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(<span class="sc">-</span><span class="fu">log10</span>(p_values)) <span class="sc">*</span> <span class="fl">1.2</span>),</span>
+<span id="cb11-12"><a href="#cb11-12"></a>        <span class="at">las =</span> <span class="dv">2</span>, <span class="co"># Rotate x-axis labels vertically</span></span>
+<span id="cb11-13"><a href="#cb11-13"></a>        <span class="at">cex.names =</span> <span class="fl">0.7</span>)</span>
+<span id="cb11-14"><a href="#cb11-14"></a></span>
+<span id="cb11-15"><a href="#cb11-15"></a><span class="co"># Add a horizontal dashed line at significance level (for example, p = 0.05)</span></span>
+<span id="cb11-16"><a href="#cb11-16"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="sc">-</span><span class="fu">log10</span>(<span class="fl">0.05</span>), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="03_regression_files/figure-html/unnamed-chunk-4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="03_regression_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># Determine significance levels based on p-values</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>significance_levels <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(p_values <span class="sc">&lt;=</span> <span class="fl">0.001</span>, <span class="st">"***"</span>,</span>
+<span id="cb12-3"><a href="#cb12-3"></a>                              <span class="fu">ifelse</span>(p_values <span class="sc">&lt;=</span> <span class="fl">0.01</span>, <span class="st">"**"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4"></a>                                     <span class="fu">ifelse</span>(p_values <span class="sc">&lt;=</span> <span class="fl">0.05</span>, <span class="st">"*"</span>, <span class="st">""</span>)))</span>
+<span id="cb12-5"><a href="#cb12-5"></a></span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="co"># Filter significant regressors whose p-values are less than 0.05</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a>significant_regressors <span class="ot">&lt;-</span> regressor_names[p_values <span class="sc">&lt;</span> <span class="fl">0.05</span>]</span>
+<span id="cb12-8"><a href="#cb12-8"></a></span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="co"># Create a table of significant regressors along with their significance levels</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a>  significant_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb12-11"><a href="#cb12-11"></a>  <span class="at">Regressors =</span> significant_regressors,</span>
+<span id="cb12-12"><a href="#cb12-12"></a>  <span class="at">P_Values =</span> p_values[p_values <span class="sc">&lt;</span> <span class="fl">0.05</span>],</span>
+<span id="cb12-13"><a href="#cb12-13"></a>  <span class="at">Significance =</span> significance_levels[p_values <span class="sc">&lt;</span> <span class="fl">0.05</span>]</span>
+<span id="cb12-14"><a href="#cb12-14"></a>)</span>
+<span id="cb12-15"><a href="#cb12-15"></a>significant_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Regressors"],"name":[1],"type":["chr"],"align":["left"]},{"label":["P_Values"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Significance"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"(Intercept)","2":"2.214873e-02","3":"*","_rn_":"(Intercept)"},{"1":"carbodyhardtop","2":"1.066928e-02","3":"*","_rn_":"carbodyhardtop"},{"1":"carbodyhatchback","2":"7.710289e-03","3":"**","_rn_":"carbodyhatchback"},{"1":"carbodywagon","2":"2.188745e-02","3":"*","_rn_":"carbodywagon"},{"1":"enginelocationrear","2":"7.658904e-03","3":"**","_rn_":"enginelocationrear"},{"1":"carwidth","2":"3.443999e-03","3":"**","_rn_":"carwidth"},{"1":"enginetypeohc","2":"2.431410e-04","3":"***","_rn_":"enginetypeohc"},{"1":"enginetypeohcv","2":"1.518253e-06","3":"***","_rn_":"enginetypeohcv"},{"1":"cylindernumberfive","2":"1.731842e-04","3":"***","_rn_":"cylindernumberfive"},{"1":"cylindernumberfour","2":"4.293199e-04","3":"***","_rn_":"cylindernumberfour"},{"1":"cylindernumbersix","2":"2.022597e-03","3":"**","_rn_":"cylindernumbersix"},{"1":"cylindernumbertwelve","2":"9.386403e-03","3":"**","_rn_":"cylindernumbertwelve"},{"1":"enginesize","2":"4.887489e-06","3":"***","_rn_":"enginesize"},{"1":"stroke","2":"1.576896e-06","3":"***","_rn_":"stroke"},{"1":"peakrpm","2":"1.054750e-04","3":"***","_rn_":"peakrpm"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># Include only significant regressors</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>model_imp <span class="ot">&lt;-</span> <span class="fu">lm</span>(price <span class="sc">~</span> enginelocation <span class="sc">+</span> enginesize <span class="sc">+</span> stroke <span class="sc">+</span> carwidth <span class="sc">+</span> peakrpm, <span class="at">data =</span> data)</span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="fu">summary</span>(model_imp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; Call:
+#&gt; lm(formula = price ~ enginelocation + enginesize + stroke + carwidth + 
+#&gt;     peakrpm, data = data)
+#&gt; 
+#&gt; Residuals:
+#&gt;    Min     1Q Median     3Q    Max 
+#&gt;  -9332  -1532   -235   1132  15349 
+#&gt; 
+#&gt; Coefficients:
+#&gt;                      Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept)        -6.886e+04  1.055e+04  -6.529 6.91e-10 ***
+#&gt; enginelocationrear  1.100e+04  1.987e+03   5.536 1.11e-07 ***
+#&gt; enginesize          1.355e+02  8.905e+00  15.211  &lt; 2e-16 ***
+#&gt; stroke             -2.768e+03  7.194e+02  -3.847 0.000167 ***
+#&gt; carwidth            9.568e+02  1.671e+02   5.725 4.41e-08 ***
+#&gt; peakrpm             2.023e+00  5.634e-01   3.591 0.000427 ***
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Residual standard error: 2948 on 175 degrees of freedom
+#&gt; Multiple R-squared:  0.8702, Adjusted R-squared:  0.8665 
+#&gt; F-statistic: 234.7 on 5 and 175 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Extract the coefficients of significant regressors from the regression model summary</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>significant_regressors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"enginelocationrear"</span>, <span class="st">"enginesize"</span>, <span class="st">"stroke"</span>, <span class="st">"carwidth"</span>, <span class="st">"peakrpm"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3"></a></span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="co"># Extract the coefficients and variable names</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a>coefficients <span class="ot">&lt;-</span> <span class="fu">coef</span>(model)[significant_regressors]</span>
+<span id="cb15-6"><a href="#cb15-6"></a></span>
+<span id="cb15-7"><a href="#cb15-7"></a><span class="co"># Create a bar plot to visualize the impact of significant regressors on price</span></span>
+<span id="cb15-8"><a href="#cb15-8"></a><span class="fu">barplot</span>(coefficients, </span>
+<span id="cb15-9"><a href="#cb15-9"></a>        <span class="at">main =</span> <span class="st">"Impact of Significant Regressors on Car Prices"</span>,</span>
+<span id="cb15-10"><a href="#cb15-10"></a>        <span class="at">xlab =</span> <span class="st">"Regressors"</span>,</span>
+<span id="cb15-11"><a href="#cb15-11"></a>        <span class="at">ylab =</span> <span class="st">"Coefficient Estimate"</span>,</span>
+<span id="cb15-12"><a href="#cb15-12"></a>        <span class="at">col =</span> <span class="st">"skyblue"</span>,</span>
+<span id="cb15-13"><a href="#cb15-13"></a>        <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fu">min</span>(coefficients) <span class="sc">*</span> <span class="fl">1.2</span>, <span class="fu">max</span>(coefficients) <span class="sc">*</span> <span class="fl">1.2</span>),</span>
+<span id="cb15-14"><a href="#cb15-14"></a>        <span class="at">las =</span> <span class="dv">2</span>, <span class="co"># Rotate x-axis labels vertically</span></span>
+<span id="cb15-15"><a href="#cb15-15"></a>        <span class="at">beside =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-16"><a href="#cb15-16"></a></span>
+<span id="cb15-17"><a href="#cb15-17"></a><span class="co"># Add labels for the variables</span></span>
+<span id="cb15-18"><a href="#cb15-18"></a><span class="fu">text</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(coefficients), coefficients, <span class="at">labels =</span> <span class="fu">round</span>(coefficients, <span class="at">digits =</span> <span class="dv">2</span>), <span class="at">pos =</span> <span class="dv">3</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="03_regression_files/figure-html/unnamed-chunk-4-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="03_regression_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="assignment-3.4" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="assignment-3.4"><span class="header-section-number">1.4</span> Assignment 3.4</h2>
+<p>Now for this part enginesize is selected based on its p-value (4.887489e-06) and significance and also a positive correletion based on the plot and positive estimate of 125.72 show that as enginesize increases, price also increases. The data type of enginesize is <dbl> double and it is statistically significant since its p-value is less than alpha= 0.05.</dbl></p>
+<div class="cell" data-hash="03_regression_cache/html/unnamed-chunk-5_6f25ac3c625451be995463c91fc81b6b">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># Plot relationship between enginesize and price</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> enginesize, <span class="at">y =</span> price)) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="03_regression_files/figure-html/unnamed-chunk-5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="03_regression_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-hash="03_regression_cache/html/unnamed-chunk-6_ef8592936e6e51cd21ff88c4d4f801d1">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Step 5: Add a new variable 'seat_heating' and run regression</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>data_with_seat_heating <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">seat_heating =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-3"><a href="#cb17-3"></a>model_with_seat_heating <span class="ot">&lt;-</span> <span class="fu">lm</span>(price <span class="sc">~</span> ., <span class="at">data =</span> data_with_seat_heating)</span>
+<span id="cb17-4"><a href="#cb17-4"></a><span class="fu">summary</span>(model_with_seat_heating) <span class="co"># Check regression summary for the coefficient of seat_heating</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; Call:
+#&gt; lm(formula = price ~ ., data = data_with_seat_heating)
+#&gt; 
+#&gt; Residuals:
+#&gt;    Min     1Q Median     3Q    Max 
+#&gt;  -5662  -1120      0    798   9040 
+#&gt; 
+#&gt; Coefficients: (1 not defined because of singularities)
+#&gt;                        Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept)          -36269.965  15460.866  -2.346 0.020354 *  
+#&gt; aspirationturbo        1846.206   1041.391   1.773 0.078386 .  
+#&gt; doornumbertwo           242.523    571.929   0.424 0.672172    
+#&gt; carbodyhardtop        -3691.743   1424.825  -2.591 0.010561 *  
+#&gt; carbodyhatchback      -3344.335   1238.359  -2.701 0.007757 ** 
+#&gt; carbodysedan          -2292.820   1356.014  -1.691 0.093043 .  
+#&gt; carbodywagon          -3427.921   1490.285  -2.300 0.022885 *  
+#&gt; drivewheelfwd          -504.564   1076.623  -0.469 0.640030    
+#&gt; drivewheelrwd           -15.446   1268.070  -0.012 0.990299    
+#&gt; enginelocationrear     6643.492   2572.275   2.583 0.010806 *  
+#&gt; wheelbase               -30.197     92.776  -0.325 0.745294    
+#&gt; carlength               -29.740     51.672  -0.576 0.565824    
+#&gt; carwidth                731.819    244.533   2.993 0.003258 ** 
+#&gt; carheight               123.195    134.607   0.915 0.361617    
+#&gt; curbweight                2.612      1.781   1.467 0.144706    
+#&gt; enginetypedohcv       -8541.957   4749.685  -1.798 0.074219 .  
+#&gt; enginetypel             978.748   1786.384   0.548 0.584619    
+#&gt; enginetypeohc          3345.252    933.001   3.585 0.000461 ***
+#&gt; enginetypeohcf          972.919   1625.631   0.598 0.550462    
+#&gt; enginetypeohcv        -6222.322   1236.415  -5.033 1.43e-06 ***
+#&gt; cylindernumberfive   -11724.540   3019.192  -3.883 0.000157 ***
+#&gt; cylindernumberfour   -11549.326   3177.177  -3.635 0.000387 ***
+#&gt; cylindernumbersix     -7151.398   2247.230  -3.182 0.001793 ** 
+#&gt; cylindernumberthree   -4318.929   4688.833  -0.921 0.358545    
+#&gt; cylindernumbertwelve -11122.209   4196.494  -2.650 0.008946 ** 
+#&gt; enginesize              125.934     26.541   4.745 5.00e-06 ***
+#&gt; fuelsystem2bbl          177.136    883.615   0.200 0.841400    
+#&gt; fuelsystemmfi         -3041.018   2576.996  -1.180 0.239934    
+#&gt; fuelsystemmpfi          359.278   1001.529   0.359 0.720326    
+#&gt; fuelsystemspdi        -2543.890   1363.546  -1.866 0.064140 .  
+#&gt; fuelsystemspfi          514.766   2499.229   0.206 0.837107    
+#&gt; boreratio             -1306.740   1642.221  -0.796 0.427516    
+#&gt; stroke                -4527.137    922.732  -4.906 2.49e-06 ***
+#&gt; compressionratio       -737.901    555.960  -1.327 0.186539    
+#&gt; horsepower               10.293     22.709   0.453 0.651035    
+#&gt; peakrpm                   2.526      0.634   3.983 0.000108 ***
+#&gt; citympg                 -90.352    166.647  -0.542 0.588538    
+#&gt; highwaympg              154.858    167.148   0.926 0.355761    
+#&gt; seat_heatingTRUE             NA         NA      NA       NA    
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Residual standard error: 2189 on 143 degrees of freedom
+#&gt; Multiple R-squared:  0.9415, Adjusted R-squared:  0.9264 
+#&gt; F-statistic: 62.21 on 37 and 143 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Adding a variable seat_heating to the data and assigning a value TRUE for all observations gave a NA for Estimate coefficient in the new regression model. This new variable has no affect on the price since it is same for all observations.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -542,6 +935,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","loop":true,"closeEffect":"zoom","selector":".lightbox","descPosition":"bottom"});</script>
 
 
 
