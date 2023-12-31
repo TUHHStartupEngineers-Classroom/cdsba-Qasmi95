@@ -232,14 +232,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1 data-number="1"><span class="header-section-number">1</span> Assignment 3</h1>
 <section id="assignment-3.1" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="assignment-3.1"><span class="header-section-number">1.1</span> Assignment 3.1</h2>
-<div class="cell" data-hash="03_regression_cache/html/unnamed-chunk-1_4b5228d361f1bf5b9aec3a9a38a3e8cb">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#load libraries</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-4"><a href="#cb1-4"></a></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="co">#Read the data and check dimensions</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/car_prices.rds"</span>)</span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">dim</span>(data) <span class="co"># Check dimensions - rows and columns</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="03_regression_cache/html/unnamed-chunk-2_6a00287a2f41d30959bbec1a327d4e46">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#Read the data and check dimensions</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/car_prices.rds"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">dim</span>(data) <span class="co"># Check dimensions - rows and columns</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 181  22</code></pre>
 </div>
@@ -247,7 +243,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="assignment-3.2" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="assignment-3.2"><span class="header-section-number">1.2</span> Assignment 3.2</h2>
-<div class="cell" data-hash="03_regression_cache/html/unnamed-chunk-2_17f59834ff37e863a587d70bf17e2f3f">
+<div class="cell" data-hash="03_regression_cache/html/unnamed-chunk-3_39378fbb28f8bc38979850781fbdcec7">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">#Get a more detailed look at the data</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="fu">str</span>(data) <span class="co"># Display structure and data types</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -307,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="assignment-3.3" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="assignment-3.3"><span class="header-section-number">1.3</span> Assignment 3.3</h2>
-<div class="cell" data-hash="03_regression_cache/html/unnamed-chunk-3_b62b47aa785136a20601f885d85ea4c5">
+<div class="cell" data-hash="03_regression_cache/html/unnamed-chunk-4_69e5b42415590fe4e61d044473f3fbf1">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">#We Run a linear regression </span></span>
 <span id="cb7-2"><a href="#cb7-2"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(price <span class="sc">~</span> ., <span class="at">data =</span> data[, <span class="sc">-</span><span class="dv">20</span>])</span>
 <span id="cb7-3"><a href="#cb7-3"></a><span class="fu">summary</span>(model) <span class="co"># Check regression summary for coefficients, p-values, etc.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -368,7 +364,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>We want to now consider seeing p-values for selecting significant regressors affecting price and we construct a barplot with alpha set to 0.05 and shown with red dotted line. All those variables with p-value greater than 0.05 we don’t consider them.</p>
-<div class="cell" data-hash="03_regression_cache/html/unnamed-chunk-4_84a73e398236271756f547e142ed9b88">
+<div class="cell" data-hash="03_regression_cache/html/unnamed-chunk-5_46adb20c637dcad6962254c2e1eee6ff">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">#Extracting p-values of regressors from the summary of the regression model</span></span>
 <span id="cb9-2"><a href="#cb9-2"></a>p_values <span class="ot">&lt;-</span> <span class="fu">summary</span>(model)<span class="sc">$</span>coefficients[, <span class="st">"Pr(&gt;|t|)"</span>]</span>
 <span id="cb9-3"><a href="#cb9-3"></a>p_values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -419,7 +415,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="03_regression_files/figure-html/unnamed-chunk-4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="03_regression_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></a></p>
+<p><a href="03_regression_files/figure-html/unnamed-chunk-5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="03_regression_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -495,7 +491,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="03_regression_files/figure-html/unnamed-chunk-4-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="03_regression_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid figure-img" width="672"></a></p>
+<p><a href="03_regression_files/figure-html/unnamed-chunk-5-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="03_regression_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -504,19 +500,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="assignment-3.4" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="assignment-3.4"><span class="header-section-number">1.4</span> Assignment 3.4</h2>
 <p>Now for this part enginesize is selected based on its p-value (4.887489e-06) and significance and also a positive correletion based on the plot and positive estimate of 125.72 show that as enginesize increases, price also increases. The data type of enginesize is <dbl> double and it is statistically significant since its p-value is less than alpha= 0.05.</dbl></p>
-<div class="cell" data-hash="03_regression_cache/html/unnamed-chunk-5_6f25ac3c625451be995463c91fc81b6b">
+<div class="cell" data-hash="03_regression_cache/html/unnamed-chunk-6_2fe2cc86df082a8f3c45b250cf2aa21a">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># Plot relationship between enginesize and price</span></span>
 <span id="cb16-2"><a href="#cb16-2"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> enginesize, <span class="at">y =</span> price)) <span class="sc">+</span></span>
 <span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="03_regression_files/figure-html/unnamed-chunk-5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="03_regression_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></a></p>
+<p><a href="03_regression_files/figure-html/unnamed-chunk-6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="03_regression_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-hash="03_regression_cache/html/unnamed-chunk-6_ef8592936e6e51cd21ff88c4d4f801d1">
+<div class="cell" data-hash="03_regression_cache/html/unnamed-chunk-7_125d89e47a531b8b816aa209bc4288dd">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Step 5: Add a new variable 'seat_heating' and run regression</span></span>
 <span id="cb17-2"><a href="#cb17-2"></a>data_with_seat_heating <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">seat_heating =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb17-3"><a href="#cb17-3"></a>model_with_seat_heating <span class="ot">&lt;-</span> <span class="fu">lm</span>(price <span class="sc">~</span> ., <span class="at">data =</span> data_with_seat_heating)</span>
@@ -935,7 +931,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","loop":true,"closeEffect":"zoom","selector":".lightbox","descPosition":"bottom"});</script>
+<script>var lightboxQuarto = GLightbox({"loop":true,"selector":".lightbox","closeEffect":"zoom","openEffect":"zoom","descPosition":"bottom"});</script>
 
 
 

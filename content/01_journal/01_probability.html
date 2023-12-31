@@ -242,99 +242,90 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="assignment-1" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Assignment 1</h1>
-<div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-1_91299bbfecdce22a56f8bc95c969c319">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#load libraries</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(ggVennDiagram)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Define being on time as event <strong>T</strong>, being not on time as <strong>!T</strong>, having a change in scope as <strong>S</strong> and having no change in scope as <strong>!S</strong></p>
+<p>Define being on time as event <strong>T</strong>, being not on time as <strong>¬T</strong>, having a change in scope as <strong>S</strong> and having no change in scope as <strong>¬S</strong></p>
 <p>Then, compute the following probabilities and the sum of all four probabilities.</p>
 <p>P(T∩S): Probability of being on time and having a change in scope.</p>
-<p>P(T∩!S): Probability of being on time and having no change in scope.</p>
-<p>P(!T∩S): Probability of not being on time and having a change in scope.</p>
-<p>P(!T∩!S): Probability of not being on time and having no change in scope.</p>
+<p>P(T∩¬S): Probability of being on time and having no change in scope.</p>
+<p>P(¬T∩S): Probability of not being on time and having a change in scope.</p>
+<p>P(¬T∩¬S): Probability of not being on time and having no change in scope.</p>
 <section id="given-the-following-definitions" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="given-the-following-definitions"><span class="header-section-number">1.1</span> Given the following definitions:</h2>
 <p>P(S): Probability of having a change in scope.</p>
-<p>P(!S): Probability of having no change in scope.</p>
+<p>P(¬S): Probability of having no change in scope.</p>
 <p>P(T∣S): Probability of being on time having a change in scope.</p>
-<p>P(T∣!S): Probability of being on time having no change in scope.</p>
-<p>P(!T∣S): Probability of not being on time having a change in scope.</p>
-<p>P(!T∣!S): Probability of not being on time having no change in scope.</p>
+<p>P(T∣¬S): Probability of being on time having no change in scope.</p>
+<p>P(¬T∣S): Probability of not being on time having a change in scope.</p>
+<p>P(¬T∣¬S): Probability of not being on time having no change in scope.</p>
 </section>
 <section id="the-general-equations-for-the-joint-probabilities-are" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="the-general-equations-for-the-joint-probabilities-are"><span class="header-section-number">1.2</span> The general equations for the Joint probabilities are:</h2>
 <p>P(T∩S)=P(S)×P(T∣S)</p>
-<p>P(T∩!S)=P(!S)×P(T∣!S)</p>
-<p>P(!T∩S)=P(S)×P(!T∣S)</p>
-<p>P(!T∩!S)=P(S)×P(!T∣!S)</p>
+<p>P(T∩¬S)=P(¬S)×P(T∣¬S)</p>
+<p>P(¬T∩S)=P(S)×P(¬T∣S)</p>
+<p>P(¬T∩¬S)=P(S)×P(¬T∣¬S)</p>
 </section>
 <section id="function-to-calculate-probabilities-based-on-provided-inputs" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="function-to-calculate-probabilities-based-on-provided-inputs"><span class="header-section-number">1.3</span> Function to calculate probabilities based on provided inputs</h2>
 <div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-2_ad907ebcad82df01a2ec28f1460ba1e7">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>calculate_probabilities <span class="ot">&lt;-</span> <span class="cf">function</span>(P_S, P_not_S, P_T_given_S, P_not_T_given_S, P_not_T_and_S, P_not_T_and_not_S) {</span>
-<span id="cb2-2"><a href="#cb2-2"></a>    <span class="co"># Calculate probabilities using the general equations</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a>    P_T_and_S <span class="ot">&lt;-</span> P_S <span class="sc">*</span> P_T_given_S</span>
-<span id="cb2-4"><a href="#cb2-4"></a>    P_T_and_not_S <span class="ot">&lt;-</span> P_not_S <span class="sc">*</span> P_T_given_not_S</span>
-<span id="cb2-5"><a href="#cb2-5"></a>    P_not_T_and_S <span class="ot">&lt;-</span> P_S <span class="sc">*</span> P_not_T_given_S</span>
-<span id="cb2-6"><a href="#cb2-6"></a>    P_not_T_and_not_S <span class="ot">&lt;-</span> P_not_S <span class="sc">*</span> P_not_T_given_not_S</span>
-<span id="cb2-7"><a href="#cb2-7"></a></span>
-<span id="cb2-8"><a href="#cb2-8"></a>    <span class="co"># Calculate the sum of all probabilities</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a>    sum_all_probabilities <span class="ot">&lt;-</span> P_T_and_S <span class="sc">+</span> P_T_and_not_S <span class="sc">+</span> P_not_T_and_S <span class="sc">+</span> P_not_T_and_not_S</span>
-<span id="cb2-10"><a href="#cb2-10"></a></span>
-<span id="cb2-11"><a href="#cb2-11"></a>    <span class="co"># Return the calculated probabilities and the sum</span></span>
-<span id="cb2-12"><a href="#cb2-12"></a>    <span class="fu">return</span>(<span class="fu">list</span>(</span>
-<span id="cb2-13"><a href="#cb2-13"></a>        <span class="at">P_T_and_S =</span> P_T_and_S,</span>
-<span id="cb2-14"><a href="#cb2-14"></a>        <span class="at">P_T_and_not_S =</span> P_T_and_not_S,</span>
-<span id="cb2-15"><a href="#cb2-15"></a>        <span class="at">P_not_T_and_S =</span> P_not_T_and_S,</span>
-<span id="cb2-16"><a href="#cb2-16"></a>        <span class="at">P_not_T_and_not_S =</span> P_not_T_and_not_S,</span>
-<span id="cb2-17"><a href="#cb2-17"></a>        <span class="at">Sum_all_probabilities =</span> sum_all_probabilities</span>
-<span id="cb2-18"><a href="#cb2-18"></a>    ))</span>
-<span id="cb2-19"><a href="#cb2-19"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>calculate_probabilities <span class="ot">&lt;-</span> <span class="cf">function</span>(P_S, P_not_S, P_T_given_S, P_not_T_given_S, P_not_T_and_S, P_not_T_and_not_S) {</span>
+<span id="cb1-2"><a href="#cb1-2"></a>    <span class="co"># Calculate probabilities using the general equations</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>    P_T_and_S <span class="ot">&lt;-</span> P_S <span class="sc">*</span> P_T_given_S</span>
+<span id="cb1-4"><a href="#cb1-4"></a>    P_T_and_not_S <span class="ot">&lt;-</span> P_not_S <span class="sc">*</span> P_T_given_not_S</span>
+<span id="cb1-5"><a href="#cb1-5"></a>    P_not_T_and_S <span class="ot">&lt;-</span> P_S <span class="sc">*</span> P_not_T_given_S</span>
+<span id="cb1-6"><a href="#cb1-6"></a>    P_not_T_and_not_S <span class="ot">&lt;-</span> P_not_S <span class="sc">*</span> P_not_T_given_not_S</span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a>    <span class="co"># Calculate the sum of all probabilities</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>    sum_all_probabilities <span class="ot">&lt;-</span> P_T_and_S <span class="sc">+</span> P_T_and_not_S <span class="sc">+</span> P_not_T_and_S <span class="sc">+</span> P_not_T_and_not_S</span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a>    <span class="co"># Return the calculated probabilities and the sum</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>    <span class="fu">return</span>(<span class="fu">list</span>(</span>
+<span id="cb1-13"><a href="#cb1-13"></a>        <span class="at">P_T_and_S =</span> P_T_and_S,</span>
+<span id="cb1-14"><a href="#cb1-14"></a>        <span class="at">P_T_and_not_S =</span> P_T_and_not_S,</span>
+<span id="cb1-15"><a href="#cb1-15"></a>        <span class="at">P_not_T_and_S =</span> P_not_T_and_S,</span>
+<span id="cb1-16"><a href="#cb1-16"></a>        <span class="at">P_not_T_and_not_S =</span> P_not_T_and_not_S,</span>
+<span id="cb1-17"><a href="#cb1-17"></a>        <span class="at">Sum_all_probabilities =</span> sum_all_probabilities</span>
+<span id="cb1-18"><a href="#cb1-18"></a>    ))</span>
+<span id="cb1-19"><a href="#cb1-19"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="now-to-calculate-the-probabilities-example-values-are-taken-from-probability-tree-to-compute-the-probabilities" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="now-to-calculate-the-probabilities-example-values-are-taken-from-probability-tree-to-compute-the-probabilities"><span class="header-section-number">1.4</span> Now to calculate the probabilities, example values are taken from probability tree to compute the probabilities</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../../assets/img/01_tree.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Probability Tree"><img src="../../assets/img/01_tree.png" class="img-fluid figure-img"></a></p>
-<figcaption class="figure-caption">Probability Tree</figcaption>
-</figure>
-</div>
+<p>¬<a href="../../assets/img/01_tree.png">Probability Tree</a></p>
 <div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-3_e19a1d087a74299ccc949d2a50429eab">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>P_S <span class="ot">&lt;-</span> <span class="fl">0.3</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>P_not_S <span class="ot">&lt;-</span> <span class="fl">0.7</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a>P_T_given_S <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>P_not_T_given_S <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> P_T_given_S</span>
-<span id="cb3-5"><a href="#cb3-5"></a>P_T_given_not_S <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a>P_not_T_given_not_S <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> P_T_given_not_S</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>P_S <span class="ot">&lt;-</span> <span class="fl">0.3</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>P_not_S <span class="ot">&lt;-</span> <span class="fl">0.7</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>P_T_given_S <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>P_not_T_given_S <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> P_T_given_S</span>
+<span id="cb2-5"><a href="#cb2-5"></a>P_T_given_not_S <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>P_not_T_given_not_S <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> P_T_given_not_S</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="calculating-probabilities-using-the-function" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="calculating-probabilities-using-the-function"><span class="header-section-number">1.5</span> Calculating probabilities using the function</h2>
 <div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-4_8c77c7e818e1ab06f10f2a0abcbf9807">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>probabilities <span class="ot">&lt;-</span> <span class="fu">calculate_probabilities</span>(P_S, P_not_S, P_T_given_S, P_not_T_given_S, P_T_given_not_S, P_not_T_given_not_S)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>probabilities <span class="ot">&lt;-</span> <span class="fu">calculate_probabilities</span>(P_S, P_not_S, P_T_given_S, P_not_T_given_S, P_T_given_not_S, P_not_T_given_not_S)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="calculating-joint-probabilities-and-sum-of-all-probabilities" class="level2" data-number="1.6">
 <h2 data-number="1.6" class="anchored" data-anchor-id="calculating-joint-probabilities-and-sum-of-all-probabilities"><span class="header-section-number">1.6</span> Calculating joint probabilities and sum of all probabilities</h2>
-<div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-5_aefc9163016373747da7f3d290323e05">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>probabilities<span class="sc">$</span>P_T_and_S  <span class="co">#P(T∩S)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-5_7985689ab6f9cb286b0b6e3f690c4494">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>probabilities<span class="sc">$</span>P_T_and_S  <span class="co">#P(T∩S)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.06</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>probabilities<span class="sc">$</span>P_T_and_not_S <span class="co">#P(T∩!S)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>probabilities<span class="sc">$</span>P_T_and_not_S <span class="co">#P(T∩¬S)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.42</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>probabilities<span class="sc">$</span>P_not_T_and_S <span class="co">#P(!T∩S)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>probabilities<span class="sc">$</span>P_not_T_and_S <span class="co">#P(¬T∩S)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.24</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>probabilities<span class="sc">$</span>P_not_T_and_not_S <span class="co">#P(!T∩!S)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>probabilities<span class="sc">$</span>P_not_T_and_not_S <span class="co">#P(¬T∩¬S)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.28</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>probabilities<span class="sc">$</span>Sum_all_probabilities <span class="co"># P(T∩S) + P(T∩!S) + P(!T∩S) + P(!T∩!S)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>probabilities<span class="sc">$</span>Sum_all_probabilities <span class="co"># P(T∩S) + P(T∩¬S) + P(¬T∩S) + P(¬T∩¬S)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 1</code></pre>
 </div>
@@ -346,27 +337,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="venn-diagram-code" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="venn-diagram-code"><span class="header-section-number">2.1</span> Venn Diagram Code</h2>
 <div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-6_6757e04ea9c53ce50e8315cc25b574f7">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Number of obervations</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a></span>
-<span id="cb15-4"><a href="#cb15-4"></a><span class="co"># Create tibble</span></span>
-<span id="cb15-5"><a href="#cb15-5"></a>app_usage <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb15-6"><a href="#cb15-6"></a>  <span class="co"># Create user_id in increasing order</span></span>
-<span id="cb15-7"><a href="#cb15-7"></a>  <span class="at">user_id =</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
-<span id="cb15-8"><a href="#cb15-8"></a>  <span class="co"># Randomly sample if smartphone was used</span></span>
-<span id="cb15-9"><a href="#cb15-9"></a>  <span class="at">smartphone =</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.4</span>),</span>
-<span id="cb15-10"><a href="#cb15-10"></a>  <span class="co"># Sample if tablet was used. More likely if smartphone was not used.</span></span>
-<span id="cb15-11"><a href="#cb15-11"></a>  <span class="at">tablet =</span> <span class="fu">ifelse</span>(smartphone <span class="sc">==</span> <span class="dv">1</span>, <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.2</span>), <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.5</span>)),</span>
-<span id="cb15-12"><a href="#cb15-12"></a>  <span class="co"># Sample if computer was used. More likely if tablet was not used.</span></span>
-<span id="cb15-13"><a href="#cb15-13"></a>  <span class="at">computer =</span> <span class="fu">ifelse</span>(tablet <span class="sc">==</span> <span class="dv">1</span>, <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.1</span>), <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.3</span>))</span>
-<span id="cb15-14"><a href="#cb15-14"></a>)</span>
-<span id="cb15-15"><a href="#cb15-15"></a></span>
-<span id="cb15-16"><a href="#cb15-16"></a><span class="co"># If no device has value of 1, we set smartphone to 1</span></span>
-<span id="cb15-17"><a href="#cb15-17"></a>app_usage <span class="ot">&lt;-</span> app_usage <span class="sc">%&gt;%</span></span>
-<span id="cb15-18"><a href="#cb15-18"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb15-19"><a href="#cb15-19"></a>  <span class="fu">mutate</span>(<span class="at">smartphone =</span> <span class="fu">ifelse</span>(<span class="fu">sum</span>(smartphone, tablet, computer) <span class="sc">==</span> <span class="dv">0</span>, <span class="dv">1</span>, smartphone))</span>
-<span id="cb15-20"><a href="#cb15-20"></a></span>
-<span id="cb15-21"><a href="#cb15-21"></a><span class="fu">head</span>(app_usage, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># Number of obervations</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="co"># Create tibble</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>app_usage <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb14-6"><a href="#cb14-6"></a>  <span class="co"># Create user_id in increasing order</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a>  <span class="at">user_id =</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
+<span id="cb14-8"><a href="#cb14-8"></a>  <span class="co"># Randomly sample if smartphone was used</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a>  <span class="at">smartphone =</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.4</span>),</span>
+<span id="cb14-10"><a href="#cb14-10"></a>  <span class="co"># Sample if tablet was used. More likely if smartphone was not used.</span></span>
+<span id="cb14-11"><a href="#cb14-11"></a>  <span class="at">tablet =</span> <span class="fu">ifelse</span>(smartphone <span class="sc">==</span> <span class="dv">1</span>, <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.2</span>), <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.5</span>)),</span>
+<span id="cb14-12"><a href="#cb14-12"></a>  <span class="co"># Sample if computer was used. More likely if tablet was not used.</span></span>
+<span id="cb14-13"><a href="#cb14-13"></a>  <span class="at">computer =</span> <span class="fu">ifelse</span>(tablet <span class="sc">==</span> <span class="dv">1</span>, <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.1</span>), <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.3</span>))</span>
+<span id="cb14-14"><a href="#cb14-14"></a>)</span>
+<span id="cb14-15"><a href="#cb14-15"></a></span>
+<span id="cb14-16"><a href="#cb14-16"></a><span class="co"># If no device has value of 1, we set smartphone to 1</span></span>
+<span id="cb14-17"><a href="#cb14-17"></a>app_usage <span class="ot">&lt;-</span> app_usage <span class="sc">%&gt;%</span></span>
+<span id="cb14-18"><a href="#cb14-18"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb14-19"><a href="#cb14-19"></a>  <span class="fu">mutate</span>(<span class="at">smartphone =</span> <span class="fu">ifelse</span>(<span class="fu">sum</span>(smartphone, tablet, computer) <span class="sc">==</span> <span class="dv">0</span>, <span class="dv">1</span>, smartphone))</span>
+<span id="cb14-20"><a href="#cb14-20"></a></span>
+<span id="cb14-21"><a href="#cb14-21"></a><span class="fu">head</span>(app_usage, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -375,96 +366,91 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># Show column sums</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">colSums</span>(app_usage)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Show column sums</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">colSums</span>(app_usage)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;    user_id smartphone     tablet   computer 
 #&gt;     500500        610        367        242</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># Equivalent commands to select specific columns</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a><span class="co">#colSums(app_usage[, 2:4])</span></span>
-<span id="cb18-3"><a href="#cb18-3"></a><span class="co">#colSums(app_usage[, c("smartphone", "tablet", "computer")])</span></span>
-<span id="cb18-4"><a href="#cb18-4"></a>app_usage <span class="sc">%&gt;%</span> <span class="fu">select</span>(smartphone, tablet, computer) <span class="sc">%&gt;%</span> <span class="fu">colSums</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Equivalent commands to select specific columns</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="co">#colSums(app_usage[, 2:4])</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="co">#colSums(app_usage[, c("smartphone", "tablet", "computer")])</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a>app_usage <span class="sc">%&gt;%</span> <span class="fu">select</span>(smartphone, tablet, computer) <span class="sc">%&gt;%</span> <span class="fu">colSums</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; smartphone     tablet   computer 
 #&gt;        610        367        242</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># Set of phone, tablet and computer users</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a>set_phon <span class="ot">&lt;-</span> <span class="fu">which</span>(app_usage<span class="sc">$</span>smartphone <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb20-3"><a href="#cb20-3"></a>set_tabl <span class="ot">&lt;-</span> <span class="fu">which</span>(app_usage<span class="sc">$</span>tablet <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb20-4"><a href="#cb20-4"></a>set_comp <span class="ot">&lt;-</span> <span class="fu">which</span>(app_usage<span class="sc">$</span>computer <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb20-5"><a href="#cb20-5"></a></span>
-<span id="cb20-6"><a href="#cb20-6"></a><span class="co"># List of all sets</span></span>
-<span id="cb20-7"><a href="#cb20-7"></a>sets_all <span class="ot">&lt;-</span> <span class="fu">list</span>(set_phon, set_tabl, set_comp)</span>
-<span id="cb20-8"><a href="#cb20-8"></a></span>
-<span id="cb20-9"><a href="#cb20-9"></a><span class="co"># Load additional package for plotting Venn diagrams</span></span>
-<span id="cb20-10"><a href="#cb20-10"></a></span>
-<span id="cb20-11"><a href="#cb20-11"></a><span class="co"># Plot Venn diagram</span></span>
-<span id="cb20-12"><a href="#cb20-12"></a><span class="fu">ggVennDiagram</span>(sets_all, <span class="at">category.names =</span> <span class="fu">c</span>(<span class="st">"Smartphone"</span>, <span class="st">"Tablet"</span>, <span class="st">"Computer"</span>),</span>
-<span id="cb20-13"><a href="#cb20-13"></a>              <span class="at">label_percent_digit =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb20-14"><a href="#cb20-14"></a>  <span class="co"># Customizing appearance</span></span>
-<span id="cb20-15"><a href="#cb20-15"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>, </span>
-<span id="cb20-16"><a href="#cb20-16"></a>        <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="st">"grey"</span>),</span>
-<span id="cb20-17"><a href="#cb20-17"></a>        <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="st">"grey"</span>)) <span class="sc">+</span></span>
-<span id="cb20-18"><a href="#cb20-18"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> .<span class="dv">24</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># Set of phone, tablet and computer users</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>set_phon <span class="ot">&lt;-</span> <span class="fu">which</span>(app_usage<span class="sc">$</span>smartphone <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb19-3"><a href="#cb19-3"></a>set_tabl <span class="ot">&lt;-</span> <span class="fu">which</span>(app_usage<span class="sc">$</span>tablet <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb19-4"><a href="#cb19-4"></a>set_comp <span class="ot">&lt;-</span> <span class="fu">which</span>(app_usage<span class="sc">$</span>computer <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb19-5"><a href="#cb19-5"></a></span>
+<span id="cb19-6"><a href="#cb19-6"></a><span class="co"># List of all sets</span></span>
+<span id="cb19-7"><a href="#cb19-7"></a>sets_all <span class="ot">&lt;-</span> <span class="fu">list</span>(set_phon, set_tabl, set_comp)</span>
+<span id="cb19-8"><a href="#cb19-8"></a></span>
+<span id="cb19-9"><a href="#cb19-9"></a><span class="co"># Load additional package for plotting Venn diagrams</span></span>
+<span id="cb19-10"><a href="#cb19-10"></a></span>
+<span id="cb19-11"><a href="#cb19-11"></a><span class="co"># Plot Venn diagram</span></span>
+<span id="cb19-12"><a href="#cb19-12"></a><span class="fu">ggVennDiagram</span>(sets_all, <span class="at">category.names =</span> <span class="fu">c</span>(<span class="st">"Smartphone"</span>, <span class="st">"Tablet"</span>, <span class="st">"Computer"</span>),</span>
+<span id="cb19-13"><a href="#cb19-13"></a>              <span class="at">label_percent_digit =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb19-14"><a href="#cb19-14"></a>  <span class="co"># Customizing appearance</span></span>
+<span id="cb19-15"><a href="#cb19-15"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>, </span>
+<span id="cb19-16"><a href="#cb19-16"></a>        <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="st">"grey"</span>),</span>
+<span id="cb19-17"><a href="#cb19-17"></a>        <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="st">"grey"</span>)) <span class="sc">+</span></span>
+<span id="cb19-18"><a href="#cb19-18"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> .<span class="dv">24</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="01_probability_files/figure-html/unnamed-chunk-6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="01_probability_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></a></p>
+<p><a href="01_probability_files/figure-html/unnamed-chunk-6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="01_probability_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># List of all sets</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a>sets_all <span class="ot">&lt;-</span> <span class="fu">list</span>(set_phon, set_tabl, set_comp)</span>
-<span id="cb21-3"><a href="#cb21-3"></a><span class="co"># Percentage of customers using all three devices</span></span>
-<span id="cb21-4"><a href="#cb21-4"></a>customers_using_all_three <span class="ot">&lt;-</span> <span class="fu">Reduce</span>(intersect, sets_all)</span>
-<span id="cb21-5"><a href="#cb21-5"></a>percentage_using_all_three <span class="ot">&lt;-</span> <span class="fu">length</span>(customers_using_all_three) <span class="sc">/</span> n <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb21-6"><a href="#cb21-6"></a></span>
-<span id="cb21-7"><a href="#cb21-7"></a></span>
-<span id="cb21-8"><a href="#cb21-8"></a></span>
-<span id="cb21-9"><a href="#cb21-9"></a><span class="co"># Customers using at least two devices</span></span>
-<span id="cb21-10"><a href="#cb21-10"></a>customers_using_at_least_two <span class="ot">&lt;-</span> (<span class="fu">length</span>(<span class="fu">Reduce</span>(intersect, sets_all[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)])) <span class="sc">+</span></span>
-<span id="cb21-11"><a href="#cb21-11"></a>                                 <span class="fu">length</span>(<span class="fu">Reduce</span>(intersect, sets_all[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)])) <span class="sc">+</span></span>
-<span id="cb21-12"><a href="#cb21-12"></a>                                 <span class="fu">length</span>(<span class="fu">Reduce</span>(intersect, sets_all[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)])) <span class="sc">-</span></span>
-<span id="cb21-13"><a href="#cb21-13"></a>                                 <span class="dv">2</span> <span class="sc">*</span> <span class="fu">length</span>(customers_using_all_three))</span>
-<span id="cb21-14"><a href="#cb21-14"></a></span>
-<span id="cb21-15"><a href="#cb21-15"></a>percentage_using_at_least_two <span class="ot">&lt;-</span> customers_using_at_least_two <span class="sc">/</span> n <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb21-16"><a href="#cb21-16"></a></span>
-<span id="cb21-17"><a href="#cb21-17"></a><span class="co"># Customers using only one device</span></span>
-<span id="cb21-18"><a href="#cb21-18"></a>customers_using_only_one <span class="ot">&lt;-</span> (<span class="fu">length</span>(set_phon) <span class="sc">+</span> <span class="fu">length</span>(set_tabl) <span class="sc">+</span> <span class="fu">length</span>(set_comp) <span class="sc">-</span></span>
-<span id="cb21-19"><a href="#cb21-19"></a>                              <span class="dv">2</span> <span class="sc">*</span> <span class="fu">length</span>(<span class="fu">Reduce</span>(intersect, sets_all[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)])) <span class="sc">-</span></span>
-<span id="cb21-20"><a href="#cb21-20"></a>                              <span class="dv">2</span> <span class="sc">*</span> <span class="fu">length</span>(<span class="fu">Reduce</span>(intersect, sets_all[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)])) <span class="sc">-</span></span>
-<span id="cb21-21"><a href="#cb21-21"></a>                              <span class="dv">2</span> <span class="sc">*</span> <span class="fu">length</span>(<span class="fu">Reduce</span>(intersect, sets_all[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)])) <span class="sc">+</span></span>
-<span id="cb21-22"><a href="#cb21-22"></a>                              <span class="dv">3</span> <span class="sc">*</span> <span class="fu">length</span>(customers_using_all_three))</span>
-<span id="cb21-23"><a href="#cb21-23"></a></span>
-<span id="cb21-24"><a href="#cb21-24"></a>percentage_using_only_one <span class="ot">&lt;-</span> customers_using_only_one <span class="sc">/</span> n <span class="sc">*</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># List of all sets</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>sets_all <span class="ot">&lt;-</span> <span class="fu">list</span>(set_phon, set_tabl, set_comp)</span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="co"># Percentage of customers using all three devices</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a>customers_using_all_three <span class="ot">&lt;-</span> <span class="fu">Reduce</span>(intersect, sets_all)</span>
+<span id="cb20-5"><a href="#cb20-5"></a>percentage_using_all_three <span class="ot">&lt;-</span> <span class="fu">length</span>(customers_using_all_three) <span class="sc">/</span> n <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb20-6"><a href="#cb20-6"></a></span>
+<span id="cb20-7"><a href="#cb20-7"></a></span>
+<span id="cb20-8"><a href="#cb20-8"></a></span>
+<span id="cb20-9"><a href="#cb20-9"></a><span class="co"># Customers using at least two devices</span></span>
+<span id="cb20-10"><a href="#cb20-10"></a>customers_using_at_least_two <span class="ot">&lt;-</span> (<span class="fu">length</span>(<span class="fu">Reduce</span>(intersect, sets_all[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)])) <span class="sc">+</span></span>
+<span id="cb20-11"><a href="#cb20-11"></a>                                 <span class="fu">length</span>(<span class="fu">Reduce</span>(intersect, sets_all[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)])) <span class="sc">+</span></span>
+<span id="cb20-12"><a href="#cb20-12"></a>                                 <span class="fu">length</span>(<span class="fu">Reduce</span>(intersect, sets_all[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)])) <span class="sc">-</span></span>
+<span id="cb20-13"><a href="#cb20-13"></a>                                 <span class="dv">2</span> <span class="sc">*</span> <span class="fu">length</span>(customers_using_all_three))</span>
+<span id="cb20-14"><a href="#cb20-14"></a></span>
+<span id="cb20-15"><a href="#cb20-15"></a>percentage_using_at_least_two <span class="ot">&lt;-</span> customers_using_at_least_two <span class="sc">/</span> n <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb20-16"><a href="#cb20-16"></a></span>
+<span id="cb20-17"><a href="#cb20-17"></a><span class="co"># Customers using only one device</span></span>
+<span id="cb20-18"><a href="#cb20-18"></a>customers_using_only_one <span class="ot">&lt;-</span> (<span class="fu">length</span>(set_phon) <span class="sc">+</span> <span class="fu">length</span>(set_tabl) <span class="sc">+</span> <span class="fu">length</span>(set_comp) <span class="sc">-</span></span>
+<span id="cb20-19"><a href="#cb20-19"></a>                              <span class="dv">2</span> <span class="sc">*</span> <span class="fu">length</span>(<span class="fu">Reduce</span>(intersect, sets_all[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)])) <span class="sc">-</span></span>
+<span id="cb20-20"><a href="#cb20-20"></a>                              <span class="dv">2</span> <span class="sc">*</span> <span class="fu">length</span>(<span class="fu">Reduce</span>(intersect, sets_all[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)])) <span class="sc">-</span></span>
+<span id="cb20-21"><a href="#cb20-21"></a>                              <span class="dv">2</span> <span class="sc">*</span> <span class="fu">length</span>(<span class="fu">Reduce</span>(intersect, sets_all[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)])) <span class="sc">+</span></span>
+<span id="cb20-22"><a href="#cb20-22"></a>                              <span class="dv">3</span> <span class="sc">*</span> <span class="fu">length</span>(customers_using_all_three))</span>
+<span id="cb20-23"><a href="#cb20-23"></a></span>
+<span id="cb20-24"><a href="#cb20-24"></a>percentage_using_only_one <span class="ot">&lt;-</span> customers_using_only_one <span class="sc">/</span> n <span class="sc">*</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="answers-generated-from-the-above-venn-diagram" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="answers-generated-from-the-above-venn-diagram"><span class="header-section-number">2.2</span> Answers generated from the above Venn diagram</h2>
 <div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-7_01de1dc042fc6389ae7c1be26c1e49b3">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># Percentage of customers using all three devices (A∩B∩C)/n</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a>percentage_using_all_three</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># Percentage of customers using all three devices (A∩B∩C)/n</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a>percentage_using_all_three</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.6</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># Percentage of customers using at least two devices ((A∩B)+(A∩C)+(B∩C)-2*(A∩B∩C))/n</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a>percentage_using_at_least_two</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># Percentage of customers using at least two devices ((A∩B)+(A∩C)+(B∩C)-2*(A∩B∩C))/n</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>percentage_using_at_least_two</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 21.3</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co"># Percentage of customers using only one device (|A|+|B|+|C|-2*(A∩B)-2*(A∩C)-2*(B∩C)+3*(A∩B∩C))/n</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a>percentage_using_only_one</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="co"># Percentage of customers using only one device (|A|+|B|+|C|-2*(A∩B)-2*(A∩C)-2*(B∩C)+3*(A∩B∩C))/n</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>percentage_using_only_one</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 78.7</code></pre>
 </div>
 </div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../../assets/img/Venn.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Course Website Venn Diagram"><img src="../../assets/img/Venn.png" class="img-fluid figure-img"></a></p>
-<figcaption class="figure-caption">Course Website Venn Diagram</figcaption>
-</figure>
-</div>
+<p>¬<a href="../../assets/img/Venn.png">Course Website Venn Diagram</a></p>
 </section>
 <section id="answers-generated-from-the-course-websites-venn-diagram" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="answers-generated-from-the-course-websites-venn-diagram"><span class="header-section-number">2.3</span> Answers generated from the Course Website’s Venn diagram</h2>
@@ -477,31 +463,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1 data-number="3"><span class="header-section-number">3</span> Assignment 3</h1>
 <section id="given-the-following-definitions-1" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="given-the-following-definitions-1"><span class="header-section-number">3.1</span> Given the following definitions:</h2>
-<p>A: Product is faulty vs !A: Product is flawless</p>
-<p>B: Alarm is triggered vs !B: No Alarm</p>
+<p>A: Product is faulty vs ¬A: Product is flawless</p>
+<p>B: Alarm is triggered vs ¬B: No Alarm</p>
 <p>P(A): Probability of product being faulty</p>
 <p>P(B∣A): Probability of alarm being triggered when product is faulty.</p>
-<p>P(B∣!A): Probability of alarm being triggered when product is flawless.</p>
-<div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-8_89bfea6f56110c463803d7cd936cd6dc">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>P_A <span class="ot">&lt;-</span> <span class="fl">0.04</span></span>
-<span id="cb28-2"><a href="#cb28-2"></a>P_not_A <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> P_A</span>
-<span id="cb28-3"><a href="#cb28-3"></a>P_B_given_A <span class="ot">&lt;-</span> <span class="fl">0.97</span></span>
-<span id="cb28-4"><a href="#cb28-4"></a>P_B_given_not_A <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
-<span id="cb28-5"><a href="#cb28-5"></a></span>
-<span id="cb28-6"><a href="#cb28-6"></a></span>
-<span id="cb28-7"><a href="#cb28-7"></a><span class="co"># For P(!A|B) and P(A|B) we use Bayes' theorem but for that we need to find P(B) first which is the probability of alarm being triggered:</span></span>
-<span id="cb28-8"><a href="#cb28-8"></a></span>
-<span id="cb28-9"><a href="#cb28-9"></a>P_B <span class="ot">&lt;-</span> (P_B_given_A<span class="sc">*</span>P_A) <span class="sc">+</span> (P_B_given_not_A<span class="sc">*</span>P_not_A)</span>
-<span id="cb28-10"><a href="#cb28-10"></a></span>
-<span id="cb28-11"><a href="#cb28-11"></a>P_not_A_given_B <span class="ot">&lt;-</span> (P_B_given_not_A<span class="sc">*</span>P_not_A)<span class="sc">/</span>P_B</span>
-<span id="cb28-12"><a href="#cb28-12"></a></span>
-<span id="cb28-13"><a href="#cb28-13"></a>P_not_A_given_B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>P(B∣¬A): Probability of alarm being triggered when product is flawless.</p>
+<div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-8_295191f6324ccbee7efcc6f4481089fe">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>P_A <span class="ot">&lt;-</span> <span class="fl">0.04</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a>P_not_A <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> P_A</span>
+<span id="cb27-3"><a href="#cb27-3"></a>P_B_given_A <span class="ot">&lt;-</span> <span class="fl">0.97</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a>P_B_given_not_A <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
+<span id="cb27-5"><a href="#cb27-5"></a></span>
+<span id="cb27-6"><a href="#cb27-6"></a></span>
+<span id="cb27-7"><a href="#cb27-7"></a><span class="co"># For P(¬A|B) and P(A|B) we use Bayes' theorem but for that we need to find P(B) first which is the probability of alarm being triggered:</span></span>
+<span id="cb27-8"><a href="#cb27-8"></a></span>
+<span id="cb27-9"><a href="#cb27-9"></a>P_B <span class="ot">&lt;-</span> (P_B_given_A<span class="sc">*</span>P_A) <span class="sc">+</span> (P_B_given_not_A<span class="sc">*</span>P_not_A)</span>
+<span id="cb27-10"><a href="#cb27-10"></a></span>
+<span id="cb27-11"><a href="#cb27-11"></a>P_not_A_given_B <span class="ot">&lt;-</span> (P_B_given_not_A<span class="sc">*</span>P_not_A)<span class="sc">/</span>P_B</span>
+<span id="cb27-12"><a href="#cb27-12"></a></span>
+<span id="cb27-13"><a href="#cb27-13"></a>P_not_A_given_B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.1983471</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>P_A_given_B <span class="ot">&lt;-</span> (P_B_given_A<span class="sc">*</span>P_A)<span class="sc">/</span>P_B</span>
-<span id="cb30-2"><a href="#cb30-2"></a></span>
-<span id="cb30-3"><a href="#cb30-3"></a>P_A_given_B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>P_A_given_B <span class="ot">&lt;-</span> (P_B_given_A<span class="sc">*</span>P_A)<span class="sc">/</span>P_B</span>
+<span id="cb29-2"><a href="#cb29-2"></a></span>
+<span id="cb29-3"><a href="#cb29-3"></a>P_A_given_B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.8016529</code></pre>
 </div>
@@ -862,7 +848,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","closeEffect":"zoom","loop":true,"descPosition":"bottom"});</script>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","descPosition":"bottom","loop":true,"closeEffect":"zoom"});</script>
 
 
 
