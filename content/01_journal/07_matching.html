@@ -192,11 +192,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Contents</h2>
    
   <ul class="collapse">
-  <li><a href="#assignment-7.1" id="toc-assignment-7.1" class="nav-link active" data-scroll-target="#assignment-7.1"><span class="header-section-number">1</span> Assignment 7.1</a></li>
-  <li><a href="#assignment-7.2" id="toc-assignment-7.2" class="nav-link" data-scroll-target="#assignment-7.2"><span class="header-section-number">2</span> Assignment 7.2</a></li>
-  <li><a href="#assignment-7.3.1" id="toc-assignment-7.3.1" class="nav-link" data-scroll-target="#assignment-7.3.1"><span class="header-section-number">3</span> Assignment 7.3.1</a></li>
-  <li><a href="#assignment-7.3.2" id="toc-assignment-7.3.2" class="nav-link" data-scroll-target="#assignment-7.3.2"><span class="header-section-number">4</span> Assignment 7.3.2</a></li>
-  <li><a href="#assignment-7.3.3" id="toc-assignment-7.3.3" class="nav-link" data-scroll-target="#assignment-7.3.3"><span class="header-section-number">5</span> Assignment 7.3.3</a></li>
+  <li><a href="#assignment-7" id="toc-assignment-7" class="nav-link active" data-scroll-target="#assignment-7"><span class="header-section-number">1</span> Assignment 7</a>
+  <ul class="collapse">
+  <li><a href="#assignment-7.1" id="toc-assignment-7.1" class="nav-link" data-scroll-target="#assignment-7.1"><span class="header-section-number">1.1</span> Assignment 7.1</a></li>
+  <li><a href="#assignment-7.2" id="toc-assignment-7.2" class="nav-link" data-scroll-target="#assignment-7.2"><span class="header-section-number">1.2</span> Assignment 7.2</a></li>
+  <li><a href="#assignment-7.3.1" id="toc-assignment-7.3.1" class="nav-link" data-scroll-target="#assignment-7.3.1"><span class="header-section-number">1.3</span> Assignment 7.3.1</a></li>
+  <li><a href="#assignment-7.3.2" id="toc-assignment-7.3.2" class="nav-link" data-scroll-target="#assignment-7.3.2"><span class="header-section-number">1.4</span> Assignment 7.3.2</a></li>
+  <li><a href="#assignment-7.3.3" id="toc-assignment-7.3.3" class="nav-link" data-scroll-target="#assignment-7.3.3"><span class="header-section-number">1.5</span> Assignment 7.3.3</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -226,8 +229,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="assignment-7.1" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="assignment-7.1"><span class="header-section-number">1</span> Assignment 7.1</h2>
+<section id="assignment-7" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Assignment 7</h1>
+<p>Imagine, the following situation. You are running an online store and one year ago, you introduced a plus membership to bind customers to your store and increase revenue. The plus memberships comes at a small cost for the customers, which is why not all of the customers subscribed. Now you want to examine whether binding customers by this membership program in fact increases your sales with subscribed customers. But of course, there are potentially confounding variables such as age, sex or pre_avg_purch (previous average purchases).</p>
+<p>Load the data membership.rds. Then,</p>
+<ul>
+<li>Check the relationships between the variables and draw a DAG as you understand the relations.</li>
+<li>Compute a naive estimate of the average treatment effect.</li>
+<li>Use the following matching methods to obtain more precise estimates:
+<ul>
+<li>(Coarsened) Exact Matching.</li>
+<li>Nearest-Neighbor Matching.</li>
+<li>Inverse Probability Weighting.</li>
+</ul></li>
+</ul>
+<section id="assignment-7.1" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="assignment-7.1"><span class="header-section-number">1.1</span> Assignment 7.1</h2>
 <div class="cell" data-hash="07_matching_cache/html/unnamed-chunk-2_0523304e2bb790e187c23904cb1ef91b">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Load the data file membership.rds</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/membership.rds"</span>)</span>
@@ -341,8 +358,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="assignment-7.2" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="assignment-7.2"><span class="header-section-number">2</span> Assignment 7.2</h2>
+<section id="assignment-7.2" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="assignment-7.2"><span class="header-section-number">1.2</span> Assignment 7.2</h2>
 <div class="cell" data-hash="07_matching_cache/html/unnamed-chunk-4_b63fd5d85d3a2267192216877307ae3c">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>treatment_group <span class="ot">&lt;-</span> <span class="fu">subset</span>(data, card <span class="sc">==</span> <span class="dv">1</span>)  </span>
 <span id="cb11-2"><a href="#cb11-2"></a>control_group <span class="ot">&lt;-</span> <span class="fu">subset</span>(data, card <span class="sc">==</span> <span class="dv">0</span>)    </span>
@@ -361,8 +378,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="assignment-7.3.1" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="assignment-7.3.1"><span class="header-section-number">3</span> Assignment 7.3.1</h2>
+<section id="assignment-7.3.1" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="assignment-7.3.1"><span class="header-section-number">1.3</span> Assignment 7.3.1</h2>
 <div class="cell" data-hash="07_matching_cache/html/unnamed-chunk-5_94e29dc13a6e9b90c6c5592a4c71d732">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># (Coarsened) Exact Matching</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a><span class="co"># Without specifying coarsening</span></span>
@@ -432,8 +449,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>The precise estimate using (Coarsened) Exact Matching for Card was found to be 15.2687</p>
 </section>
-<section id="assignment-7.3.2" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="assignment-7.3.2"><span class="header-section-number">4</span> Assignment 7.3.2</h2>
+<section id="assignment-7.3.2" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="assignment-7.3.2"><span class="header-section-number">1.4</span> Assignment 7.3.2</h2>
 <div class="cell" data-hash="07_matching_cache/html/unnamed-chunk-6_7dfc1a1c4c123d4ad3e22558e556e6d4">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># NN matching</span></span>
 <span id="cb17-2"><a href="#cb17-2"></a><span class="co"># replace: one-to-one or one-to-many matching</span></span>
@@ -504,8 +521,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>The precise estimate using Nearest Neighbor Matching for Card was found to be 14.9524</p>
 </section>
-<section id="assignment-7.3.3" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="assignment-7.3.3"><span class="header-section-number">5</span> Assignment 7.3.3</h2>
+<section id="assignment-7.3.3" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="assignment-7.3.3"><span class="header-section-number">1.5</span> Assignment 7.3.3</h2>
 <div class="cell" data-hash="07_matching_cache/html/unnamed-chunk-7_553632fe598087ea20141a8c1bef868b">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co">#Inverse Probability Weighting</span></span>
 <span id="cb21-2"><a href="#cb21-2"></a><span class="co"># (1) Propensity scores</span></span>
@@ -630,6 +647,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The precise estimate using Inverse Probability Weighting for Card was found to be 14.9548</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -982,7 +1000,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":true,"openEffect":"zoom","closeEffect":"zoom","selector":".lightbox"});</script>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","loop":true,"descPosition":"bottom","closeEffect":"zoom","selector":".lightbox"});</script>
 
 
 

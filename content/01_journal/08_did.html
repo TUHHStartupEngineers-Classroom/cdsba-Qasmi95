@@ -225,6 +225,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="assignment-8" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Assignment 8</h1>
+<p>Imagine, you are manager of a large health provider that manages many hospitals and you want to test how a new admission procedure affects patient satisfaction. You randomly selected 18 hospitals that introduced the new admission procedure and compare them to 28 other hospitals that did not introduce the method. For both groups of hospitals you collected data from before and after the introduction. The data you have collected is from patient surveys where they were asked how satisfied they are.</p>
+<p>Load the data from the file hospdd.rds1. Then, perform a difference-in-differences analysis by</p>
+<ul>
+<li><p>Manually computing the mean satisfaction for treated and control hospitals before and after the treatment. Helpful functions could be filter(), pull() and basic arithmetic operations.</p></li>
+<li><p>Using a linear regression to compute the estimate. Also, include group and time fixed effects in the regression, i.e.&nbsp;one regressor for each month and one regressor for each hospital: Consider, whether you want to include them as</p>
+<ul>
+<li><p>month + hospital or as</p></li>
+<li><p>as.factor(month) + as.factor(hospital)</p></li>
+</ul></li>
+</ul>
+<p>and explain what the difference is.</p>
 <section id="assignment-8.1" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="assignment-8.1"><span class="header-section-number">1.1</span> Assignment 8.1</h2>
 <div class="cell" data-hash="08_did_cache/html/unnamed-chunk-1_7663afde8fbdded0dc3fa778ff84d892">
