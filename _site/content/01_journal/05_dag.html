@@ -231,6 +231,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="assignment-5" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Assignment 5</h1>
+<ul>
+<li><p>Think about example from previous chapter (parking spots) and draw the DAG.</p></li>
+<li><p>Load the data file customer_sat.rds. A company sells a SaaS (Software as a service) to business clients that chose to subscribe to one of the three subscription levels, Starter, Premium or Elite, which provide different features at different price points (more storage and other capabilities). Starter has the least functionality, while Elite includes the most features.</p>
+<p>Now imagine, you are working as an analyst for that company and are asked to examine the relationship between follow-up calls to the clients and their satisfaction with the product and service. Follow-up calls are voluntary and are just to help the client with possible problems and so on. Satisfaction is measured on a weekly basis by surveying the clients.</p>
+<p>In the data, you find three variables: satisfaction, follow_ups and subscription. Perform the following steps:</p>
+<ul>
+<li><p>regress satisfaction on follow_ups</p></li>
+<li><p>regress satisfaction on follow_ups and account for subscription</p></li>
+</ul></li>
+<li><p>Compare the coefficients and find a possible explanation.</p></li>
+<li><p>Plot the data. You’ll find a similar plot in this chapter, that you can copy some lines from.</p></li>
+</ul>
 <section id="assignment-5.1" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="assignment-5.1"><span class="header-section-number">1.1</span> Assignment 5.1</h2>
 <div class="cell" data-hash="05_dag_cache/html/unnamed-chunk-2_5ff3f601cb0d23e4da472c2cb1df3558">
@@ -706,7 +718,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","descPosition":"bottom","loop":true});</script>
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","loop":true,"openEffect":"zoom"});</script>
 
 
 

@@ -193,6 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul class="collapse">
   <li><a href="#assignment-4" id="toc-assignment-4" class="nav-link active" data-scroll-target="#assignment-4"><span class="header-section-number">1</span> Assignment 4</a></li>
+  <li><a href="#solution" id="toc-solution" class="nav-link" data-scroll-target="#solution"><span class="header-section-number">2</span> Solution</a></li>
   </ul>
 </nav>
     </div>
@@ -224,9 +225,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="assignment-4" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Assignment 4</h1>
+<p>In this chapter, there is no typical assignment but we will use it to get familiar with plotting functions in R, in particular ggplot2. We’ll need them in the following chapters, so feel free to play around and get used to the syntax. You can also check out the graphs from the previous chapter.</p>
+<p>Having read this chapter, you have already understood the risk of confusing correlation with causation. On the internet, you can find many examples of spurious correlations. Spurious correlations are correlations that appear to be causal but are in fact not. The reason could be that there is a confounding factor or that two variables happen to be statistically associated just by coincidence.</p>
+<p>Do some internet research and find a spurious correlation. Then, try to replicate it in R using ggplot2. Here you can find a well written introduction to ggplot2 written by Megan Hall and the official documentation also contains a lot of useful tips. It does not to be exactly the same plot but it should convey the message that both variables correlate.</p>
+</section>
+<section id="solution" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Solution</h1>
 <p>It is common for unrelated variables to appear to be correlated by coincidence. This is known as spurious correlation. The “Spending on science, space, and technology” in the United States is one example of this, as it shows a surprisingly strong correlation with the “Suicides by hanging, strangulation and suffocation” over time. While there is a significant positive correlation between these two variables, there is no causal relationship.</p>
 <p>Example taken from (https://tylervigen.com/spurious-correlations)</p>
-<p><a href="../../assets/img/Spurious.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Spurious Correlation Example"><img src="../../assets/img/Spurious.png" class="img-fluid" alt="Spurious Correlation Example"></a> Generating random data to show spurious correlation</p>
+<p><a href="../../assets/img/Spurious.png" class="lightbox" title="Spurious Correlation Example" data-gallery="quarto-lightbox-gallery-1"><img src="../../assets/img/Spurious.png" class="img-fluid" alt="Spurious Correlation Example"></a> Generating random data to show spurious correlation</p>
 <div class="cell" data-hash="04_causality_cache/html/unnamed-chunk-2_47e710e3dc4bede802b926152911c32c">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Generating random data</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
@@ -607,7 +614,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom","descPosition":"bottom","loop":true});</script>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","descPosition":"bottom","loop":true});</script>
 
 
 

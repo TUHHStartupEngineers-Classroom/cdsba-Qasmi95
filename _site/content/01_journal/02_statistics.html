@@ -101,6 +101,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -227,6 +229,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="assigment-2" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Assigment 2</h1>
+<p>Load the table random_vars.rds. You can either</p>
+<ul>
+<li>run the command: random_vars &lt;- readRDS(“your_download_folder/random_vars.rds”)</li>
+<li>or find the file in the Files pane and select it.</li>
+</ul>
+<p>After you load the table, get an overview of what it contains with View(random_vars).</p>
+<ul>
+<li>For each variable, compute the following values. You can use the built-in functions or use the mathematical formulas.
+<ul>
+<li>expected value</li>
+<li>variance</li>
+<li>standard deviation</li>
+</ul></li>
+<li>Explain, if it makes sense to compare the standard deviations.</li>
+<li>Then, examine the relationship between both variables and compute:
+<ul>
+<li>covariance</li>
+<li>correlation</li>
+</ul></li>
+<li>What measure is easier to interpret? Please discuss your interpretation.</li>
+<li>Compute the conditional expected value for:
+<ul>
+<li>E[income | age &lt;= 18]</li>
+<li>E[income | age <span class="math inline">\(\epsilon\)</span> [18,65)]</li>
+<li>E[income | age &gt;= 65]</li>
+</ul></li>
+</ul>
 <section id="assignment-2.1" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="assignment-2.1"><span class="header-section-number">1.1</span> Assignment 2.1</h2>
 <div class="cell" data-hash="02_statistics_cache/html/unnamed-chunk-2_66f5daadab67c875626d076930f4d2fb">

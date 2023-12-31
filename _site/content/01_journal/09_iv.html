@@ -230,6 +230,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="assignment-9" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Assignment 9</h1>
+<p>Imagine the following situation: you have developed an app and you are already having an active user base. Of course, some users are more active than other users. Also, users might use the app for different purposes. In general, user behavior likely depends on a lot of unobserved characteristics.</p>
+<p>Obviously, your goal is to keep users as long as possible on the app to maximize your ad revenues. To do that, you want to introduce a new feature and see how it affects time spent on the app. Simply comparing users who use the newly introduced feature to users who don’t would result in a biased estimate due to the unobserved confounders regarding their activity and willingness to use a new feature.</p>
+<p>Therefore, you perform a so called randomized encouragement trial, where for a random selection of users, a popup appears when opening the app and encourages these users to test new feature. The users who are not randomly selected don’t get a popup message but could also use the new feature.</p>
+<p>After a while you collect data on users’ activity and also if they were encouraged and if they used the new feature. To see the data, load rand_enc.rds. Do the following steps:</p>
+<ul>
+<li><p>Draw a DAG of how you understand the relationships.</p></li>
+<li><p>Compute the naive, biased estimate.</p></li>
+<li><p>For the assumptions that can be (partly) tested, check whether they are satisfied by either computing correlations or drawing plots. Argue whether instrumental variable estimation is an adequate procedure.</p></li>
+<li><p>Compute the IV estimate using 2SLS and compare it to the naive estimate. Would you consider the naive estimate biased, and if yes, does it have an upward or downward bias?</p></li>
+</ul>
+<section id="assignment-9.1" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="assignment-9.1"><span class="header-section-number">1.1</span> Assignment 9.1</h2>
 <div class="cell" data-hash="09_iv_cache/html/unnamed-chunk-2_178c051e66095c70ecf690a768dfcfd1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/rand_enc.rds"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -242,8 +254,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<section id="assignment-9.1" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="assignment-9.1"><span class="header-section-number">1.1</span> Assignment 9.1</h2>
 <p>To perform a randomized encouragement trial where for a random selection of users, a popup appears when opening the app and encourages these users to test new feature. The users who are not randomly selected don’t get a popup message but could also use the new feature. Lets name this new feature Encouragement and draw a DAG including this feature.</p>
 <div class="cell" data-hash="09_iv_cache/html/unnamed-chunk-3_590f693b709fd2c5606d3912d49c3002">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>app_dag <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
@@ -786,7 +796,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","loop":true,"openEffect":"zoom","closeEffect":"zoom"});</script>
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom","selector":".lightbox","loop":true});</script>
 
 
 

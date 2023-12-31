@@ -230,6 +230,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="assignment-6" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Assignment 6</h1>
+<p>Load the dataset abtest_online.rds. It contains data about a randomized experiment run by an online shop. E-commerce websites frequently conduct numerous randomized experiments, commonly referred to as AB testing in a business context. In these experiments, a subset of randomly chosen website visitors is presented with a slightly altered version of the site, while others see the standard version. This approach enables the testing of new features, and the decision to implement a new feature is contingent on the outcomes derived from these tests.</p>
+<p>Consider this situation: You operate an online store and are concerned about the expenses associated with your customer service. To cut costs, you contemplate introducing a chatbot as a substitute for human customer service. However, you’re uncertain whether this change might have a detrimental impact on your sales. Consequently, you intend to conduct an AB test. In this test, a portion of users will be directed to a website equipped with a chatbot (treatment group), while the remaining customers will still interact with human customer service (control group) if they have questions. To ensure randomization, you’ll allocate the treatment based on the last digit of each user’s IP address.</p>
+<p>There are two outcome variables, purchase and purchase_amount. The first one shows whether a customer bought and the other how much (in €) he bought. First, let’s use purchase_amount.</p>
+<p>Other variables included are mobile_device being TRUE when a user visits the site using a mobile device and previous_visits indicating the number of previous visits of a particular user.</p>
+<p>After loading the data, perform the following steps:</p>
+<ul>
+<li>Check whether the covariates are balanced across the groups. Use a plot to show it.</li>
+<li>Run a regression to find the effect of chatbot on sales.</li>
+<li>Find subgroup-specific effects by including an interaction. Compute a CATE for one exemplary group. A subgroup could be for example mobile users.</li>
+<li>It’s not only of interest how much customers buy but also if the buy at all. Then, the dependent variable is binary (either 0 or 1) instead of continuous and the model of choice is the logistic regression. Use the outcome variable purchase and run a logistic regression. The coefficients are not as easily interpretable as before. Look it up and interpret the coefficient for chatbot.</li>
+</ul>
 <section id="assignment-6.1" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="assignment-6.1"><span class="header-section-number">1.1</span> Assignment 6.1</h2>
 <div class="cell" data-hash="06_rct_cache/html/unnamed-chunk-2_80d7a37a3ddfffc30ca0cb6f341d9fe9">
@@ -792,7 +803,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"loop":true,"openEffect":"zoom","descPosition":"bottom","closeEffect":"zoom","selector":".lightbox"});</script>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","selector":".lightbox","closeEffect":"zoom","loop":true});</script>
 
 
 

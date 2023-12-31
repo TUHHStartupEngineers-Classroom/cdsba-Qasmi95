@@ -1,6 +1,20 @@
 ---
 title: "Matching and Subclassification"
 ---
+
+# Assignment 7
+
+Imagine, the following situation. You are running an online store and one year ago, you introduced a plus membership to bind customers to your store and increase revenue. The plus memberships comes at a small cost for the customers, which is why not all of the customers subscribed. Now you want to examine whether binding customers by this membership program in fact increases your sales with subscribed customers. But of course, there are potentially confounding variables such as age, sex or pre_avg_purch (previous average purchases).
+
+Load the data membership.rds. Then,
+
+  * Check the relationships between the variables and draw a DAG as you understand the relations.
+  * Compute a naive estimate of the average treatment effect.
+  * Use the following matching methods to obtain more precise estimates:
+    + (Coarsened) Exact Matching.
+    + Nearest-Neighbor Matching.
+    + Inverse Probability Weighting.
+
 ```{r}
 #| include: false
 # Load necessary libraries

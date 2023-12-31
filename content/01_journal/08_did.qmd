@@ -4,6 +4,20 @@ title: "Difference-in-Differences"
 
 # Assignment 8
 
+Imagine, you are manager of a large health provider that manages many hospitals and you want to test how a new admission procedure affects patient satisfaction. You randomly selected 18 hospitals that introduced the new admission procedure and compare them to 28 other hospitals that did not introduce the method. For both groups of hospitals you collected data from before and after the introduction. The data you have collected is from patient surveys where they were asked how satisfied they are.
+
+Load the data from the file hospdd.rds1. Then, perform a difference-in-differences analysis by
+
+   * Manually computing the mean satisfaction for treated and control hospitals before and after the treatment. Helpful functions could be filter(), pull() and basic arithmetic operations.
+
+   * Using a linear regression to compute the estimate. Also, include group and time fixed effects in the regression, i.e. one regressor for each month and one regressor for each hospital: Consider, whether you want to include them as
+
+      + month + hospital or as
+
+      + as.factor(month) + as.factor(hospital)
+
+  and explain what the difference is.
+
 ## Assignment 8.1
 ```{r}
 #load libraries

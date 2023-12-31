@@ -3,6 +3,27 @@ title: "Statistical Concepts"
 ---
 
 # Assigment 2
+Load the table random_vars.rds. You can either
+
+* run the command: random_vars <- readRDS("your_download_folder/random_vars.rds")
+* or find the file in the Files pane and select it.
+
+After you load the table, get an overview of what it contains with View(random_vars).
+
+* For each variable, compute the following values. You can use the built-in functions or use the mathematical formulas.
+    + expected value
+    + variance
+    + standard deviation
+* Explain, if it makes sense to compare the standard deviations.
+* Then, examine the relationship between both variables and compute:
+    + covariance
+    + correlation
+* What measure is easier to interpret? Please discuss your interpretation.
+* Compute the conditional expected value for:
+    + E[income | age <= 18]
+    + E[income | age $\epsilon$ [18,65)]
+    + E[income | age >= 65]
+    
 ## Assignment 2.1
 ```{r}
 #| include: false

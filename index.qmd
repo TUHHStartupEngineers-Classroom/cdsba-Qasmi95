@@ -7,3 +7,9 @@ author: "Muhammad Ahmed Qasmi"
 ![](assets/logo/TIE_logo.svg){width=80% fig-align="center"}
 
 The lab journal has been completed. 
+
+Name: Muhammad Ahmed Qasmi
+
+Program: Information and Communication Systems
+
+Matriculation: 55072

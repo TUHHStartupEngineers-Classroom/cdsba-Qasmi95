@@ -3,25 +3,25 @@ title: "Probability Theory"
 ---
 
 # Assignment 1
-```{r}
-#| include: false
-#load libraries
-library(ggVennDiagram)
-```
 
 Define being on time as event **T**, being not on time as **¬T**, having a change in scope as **S** and having no change in scope as **¬S** 
 
 Then, compute the following probabilities and the sum of all four probabilities.
 
 
-P(T∩S): Probability of being on time and having a change in scope.
+* P(T∩S): Probability of being on time and having a change in scope.
 
-P(T∩¬S): Probability of being on time and having no change in scope.
+* P(T∩¬S): Probability of being on time and having no change in scope.
 
-P(¬T∩S): Probability of not being on time and having a change in scope.
+* P(¬T∩S): Probability of not being on time and having a change in scope.
 
-P(¬T∩¬S): Probability of not being on time and having no change in scope.
+* P(¬T∩¬S): Probability of not being on time and having no change in scope.
 
+```{r}
+#| include: false
+#load libraries
+library(ggVennDiagram)
+```
 
 
 ## Given the following definitions:
@@ -100,6 +100,13 @@ probabilities$P_not_T_and_not_S #P(¬T∩¬S)
 probabilities$Sum_all_probabilities # P(T∩S) + P(T∩¬S) + P(¬T∩S) + P(¬T∩¬S)
 ```
 # Assignment 2
+Using the Venn diagram above, answer the following questions.
+
+* What is the percentage of customers using all three devices?
+
+* What is the percentage of customers using at least two devices?
+
+* What is the percentage of customers using only one device?
 
 ## Venn Diagram Code
 
@@ -199,6 +206,11 @@ Percentage of customers using only one device = 80.1
 
 
 # Assignment 3
+Compute
+
+* (1) P(¬A∣B)
+* (2) P(A∣B)
+
 ## Given the following definitions:
 
 A: Product is faulty vs ¬A: Product is flawless
