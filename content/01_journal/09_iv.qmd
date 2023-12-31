@@ -4,15 +4,111 @@ title: "Instrumental Variables"
 
 # Assignment 9
 
-## Assignment 9.1
 ```{r}
+#| include: false
 library(Matching)
 library(ggdag)
 library(tidyverse)
 library(dagitty)
 library(MatchIt)
+library(estimatr)
+```
 
-
+```{r}
 data <- readRDS("data/rand_enc.rds")
 data
 ```
+## Assignment 9.1
+
+To perform a randomized encouragement trial where for a random selection of users, a popup appears when opening the app and encourages these users to test new feature. The users who are not randomly selected don’t get a popup message but could also use the new feature. Lets name this new feature Encouragement and draw a DAG including this feature.
+
+```{r}
+app_dag <- dagify(
+  Used_Feature ~ Encouragement,
+  Used_Feature ~ Unobserved_Cofounders,
+  Time_Spent ~ Unobserved_Cofounders,
+  Time_Spent ~ Used_Feature,
+  coords = list(x = c(Unobserved_Cofounders = 1, Time_Spent = 2, Encouragement = -1, Used_Feature = 0),
+                y = c(Used_Feature = 0, Unobserved_Cofounders = 1, Time_Spent = 0, Encouragement = 0))
+)
+
+# Plot the DAG 
+ggdag(app_dag, text = FALSE) +
+  geom_dag_point() +
+  geom_dag_text(color = "red") +
+  geom_dag_edges(edge_color = "black")
+```
+## Assignment 9.2
+```{r}
+# Naive estimation
+model_naive <- lm(time_spent ~ used_ftr, data = data)
+summary(model_naive)
+```
+The naive, biased estimate for using the feature is 10.82
+
+## Assignment 9.3
+```{r}
+# Compute the correlation and plotting them to satisfy the assumptions that can be partly tested
+correlations <- cor(data)
+correlations
+
+# Plot relationship between used_ftr and time_spent
+ggplot(data, aes(x = used_ftr, y = time_spent)) +
+  geom_point(alpha = 0.8)+ geom_smooth(method = "lm")
+
+# Plot relationship between rand_enc and time_spent
+ggplot(data, aes(x = rand_enc, y = time_spent)) +
+  geom_point(alpha = 0.8)+ geom_smooth(method = "lm")
+
+# Plot relationship between rand_enc and used_ftr
+ggplot(data, aes(x = rand_enc, y = used_ftr)) +
+  geom_point(alpha = 0.8)+ geom_smooth(method = "lm")
+```
+Stable Unit Treatment Value Assumption (SUTVA):
+
+SUTVA assumes that the potential outcomes for a unit do not vary with treatments assigned to other units. The correlations don't explicitly demonstrate this, but it seems plausible based on the correlation values.
+There isn't an apparent violation of SUTVA based solely on the correlation values. However, it's essential to recognize that this assumption cannot be definitively confirmed from correlation values alone.
+
+
+Independence Assumption:
+
+There should be no confounding between the instrument (encouragement) and treatment (use of the new feature), nor between the instrument and the outcome (time spent).
+The correlations provided don't explicitly indicate confounding factors between the encouragement, new feature usage, or time spent on the app.
+For example, the correlation between encouragement and using the new feature is 0.204, suggesting a weak positive relationship. It doesn't explicitly point to strong confounding between these variables.
+
+
+Exclusion Restriction:
+
+The exclusion restriction implies that the instrument (encouragement) should not directly affect the outcome (time spent) except through the treatment (new feature usage).
+There's no apparent reason why the encouragement should directly affect time spent on the app without influencing the use of the new feature. However, this assumption cannot be tested directly from the correlation values.
+
+
+Instrument Relevance:
+
+Instrument relevance refers to the correlation between the instrument (encouragement) and the treatment (use of the new feature). A stronger correlation indicates a more powerful instrument.
+The correlation between encouragement and using the new feature is 0.204, indicating a moderate positive association. While there is a relationship, it's not particularly strong.
+
+
+Monotonicity Assumption:
+
+Monotonicity assumes that the instrument operates in the same direction for all affected units.
+The correlation plots address this assumption. It shows that the effect on treatment and outcome due to the instrument goes in the same direction.
+
+## Assignment 9.4
+```{r}
+# First stage
+first_stage <- lm(time_spent~used_ftr, data = data)
+summary(first_stage)
+
+# Second stage
+second_stage <- lm(data$time_spent~first_stage $fitted.values)
+summary(second_stage)
+
+model_iv <- iv_robust(time_spent ~ used_ftr | rand_enc, data = data)
+summary(model_iv)
+```
+Bias in the naive estimate is indicated when there is a significant difference between the naive estimate and the IV estimate. The IV estimate (9.738) is lower in this instance than the naive estimate (10.82).  This indicates a potential upward bias in the naive estimate.
+
+The difference between the naive estimate and the IV estimate indicates that the naive estimate, which is based on a simple comparison method, probably overestimated the influence of the new feature on user activity. By adjusting for potential biases caused by unobserved confounders, the IV estimate produced by 2SLS shows a lower estimated effect of the new feature on user activity when compared to the naive approach.
+
+The discrepancy in these estimates emphasises how crucial it is to take into consideration potential confounders and employ more reliable techniques, such as instrumental variable estimation, in order to get a more precise picture of the causal relationship between the new feature and user behaviour.

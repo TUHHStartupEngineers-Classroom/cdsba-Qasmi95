@@ -6,12 +6,15 @@ title: "Difference-in-Differences"
 
 ## Assignment 8.1
 ```{r}
+#load libraries
 library(Matching)
 library(ggdag)
 library(tidyverse)
 library(dagitty)
 library(MatchIt)
+```
 
+```{r}
 # loading data into data
 data <- readRDS("data/hospdd.rds")
 data

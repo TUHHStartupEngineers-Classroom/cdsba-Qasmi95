@@ -6,10 +6,13 @@ title: "Regression and Statistical Inference"
 
 ## Assignment 3.1
 ```{r}
+#| include: false
 #load libraries
 library(dplyr)
 library(ggplot2)
+```
 
+```{r}
 #Read the data and check dimensions
 data <- readRDS("data/car_prices.rds")
 dim(data) # Check dimensions - rows and columns

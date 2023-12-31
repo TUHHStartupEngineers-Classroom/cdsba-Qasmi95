@@ -2,6 +2,7 @@
 title: "Matching and Subclassification"
 ---
 ```{r}
+#| include: false
 # Load necessary libraries
 library(tidyverse)
 library(Matching)

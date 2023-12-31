@@ -5,9 +5,12 @@ title: "Statistical Concepts"
 # Assigment 2
 ## Assignment 2.1
 ```{r}
+#| include: false
 #load libraries
 library(dplyr)
+```
 
+```{r}
 # Load the data from random_vars.rds file
 data <- readRDS("data/random_vars.rds")  # Replace 'path_to_your_folder' with the actual path
 
@@ -30,7 +33,7 @@ Standard deviation provides insights into the variability of individual variable
 
 ## Assignment 2.3
 ```{r}
-# Compute expected value, variance, and standard deviation for each variable
+# Compute covariance and correlation for each variable
 summary_stats <- data.frame(
   Variable = colnames(data),
   Covariance = sapply(data, function(x) sapply(data, function(y) cov(x, y))),

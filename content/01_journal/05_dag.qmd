@@ -4,6 +4,7 @@ title: "Directed Acyclic Graphs"
 # Assignment 5
 
 ```{r}
+#| include: false
 # Load necessary libraries
 library(dagitty)
 library(ggdag)

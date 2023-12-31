@@ -7,12 +7,15 @@ title: "Regression Discontinuity"
 
 ## Assignment 10.1
 ```{r}
+#| include: false
 #load libraries
 library(ggplot2)
 library(dplyr)
 library(rddensity)
 library(tidyverse)
+```
 
+```{r}
 # Read data for coupon.rds
 df <- readRDS("data/coupon.rds")
 

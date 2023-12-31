@@ -4,22 +4,23 @@ title: "Probability Theory"
 
 # Assignment 1
 ```{r}
+#| include: false
 #load libraries
 library(ggVennDiagram)
 ```
 
-Define being on time as event **T**, being not on time as **!T**, having a change in scope as **S** and having no change in scope as **!S** 
+Define being on time as event **T**, being not on time as **¬T**, having a change in scope as **S** and having no change in scope as **¬S** 
 
 Then, compute the following probabilities and the sum of all four probabilities.
 
 
 P(T∩S): Probability of being on time and having a change in scope.
 
-P(T∩!S): Probability of being on time and having no change in scope.
+P(T∩¬S): Probability of being on time and having no change in scope.
 
-P(!T∩S): Probability of not being on time and having a change in scope.
+P(¬T∩S): Probability of not being on time and having a change in scope.
 
-P(!T∩!S): Probability of not being on time and having no change in scope.
+P(¬T∩¬S): Probability of not being on time and having no change in scope.
 
 
 
@@ -28,15 +29,15 @@ P(!T∩!S): Probability of not being on time and having no change in scope.
 
 P(S): Probability of having a change in scope.
 
-P(!S): Probability of having no change in scope.
+P(¬S): Probability of having no change in scope.
 
 P(T∣S): Probability of being on time having a change in scope.
 
-P(T∣!S): Probability of being on time having no change in scope.
+P(T∣¬S): Probability of being on time having no change in scope.
 
-P(!T∣S): Probability of not being on time having a change in scope.
+P(¬T∣S): Probability of not being on time having a change in scope.
 
-P(!T∣!S): Probability of not being on time having no change in scope.
+P(¬T∣¬S): Probability of not being on time having no change in scope.
 
 
 ## The general equations for the Joint probabilities are:
@@ -44,11 +45,11 @@ P(!T∣!S): Probability of not being on time having no change in scope.
 
 P(T∩S)=P(S)×P(T∣S)
 
-P(T∩!S)=P(!S)×P(T∣!S)
+P(T∩¬S)=P(¬S)×P(T∣¬S)
 
-P(!T∩S)=P(S)×P(!T∣S)
+P(¬T∩S)=P(S)×P(¬T∣S)
 
-P(!T∩!S)=P(S)×P(!T∣!S)
+P(¬T∩¬S)=P(S)×P(¬T∣¬S)
 
 
 ## Function to calculate probabilities based on provided inputs
@@ -77,7 +78,7 @@ calculate_probabilities <- function(P_S, P_not_S, P_T_given_S, P_not_T_given_S, 
 
 ## Now to calculate the probabilities, example values are taken from probability tree to compute the probabilities
 
-![Probability Tree](../../assets/img/01_tree.png)
+¬[Probability Tree](../../assets/img/01_tree.png)
 ```{r}
 P_S <- 0.3
 P_not_S <- 0.7
@@ -93,10 +94,10 @@ probabilities <- calculate_probabilities(P_S, P_not_S, P_T_given_S, P_not_T_give
 ## Calculating joint probabilities and sum of all probabilities
 ```{r}
 probabilities$P_T_and_S  #P(T∩S)
-probabilities$P_T_and_not_S #P(T∩!S)
-probabilities$P_not_T_and_S #P(!T∩S)
-probabilities$P_not_T_and_not_S #P(!T∩!S)
-probabilities$Sum_all_probabilities # P(T∩S) + P(T∩!S) + P(!T∩S) + P(!T∩!S)
+probabilities$P_T_and_not_S #P(T∩¬S)
+probabilities$P_not_T_and_S #P(¬T∩S)
+probabilities$P_not_T_and_not_S #P(¬T∩¬S)
+probabilities$Sum_all_probabilities # P(T∩S) + P(T∩¬S) + P(¬T∩S) + P(¬T∩¬S)
 ```
 # Assignment 2
 
@@ -187,7 +188,7 @@ percentage_using_at_least_two
 # Percentage of customers using only one device (|A|+|B|+|C|-2*(A∩B)-2*(A∩C)-2*(B∩C)+3*(A∩B∩C))/n
 percentage_using_only_one
 ```
-![Course Website Venn Diagram](../../assets/img/Venn.png)
+¬[Course Website Venn Diagram](../../assets/img/Venn.png)
 
 ## Answers generated from the Course Website's Venn diagram
 Percentage of customers using all three devices = 0.5
@@ -200,15 +201,15 @@ Percentage of customers using only one device = 80.1
 # Assignment 3
 ## Given the following definitions:
 
-A: Product is faulty vs !A: Product is flawless
+A: Product is faulty vs ¬A: Product is flawless
 
-B: Alarm is triggered vs !B: No Alarm
+B: Alarm is triggered vs ¬B: No Alarm
 
 P(A): Probability of product being faulty
 
 P(B∣A): Probability of alarm being triggered when product is faulty.
 
-P(B∣!A): Probability of alarm being triggered when product is flawless.
+P(B∣¬A): Probability of alarm being triggered when product is flawless.
 
 ```{r}
 P_A <- 0.04
@@ -217,7 +218,7 @@ P_B_given_A <- 0.97
 P_B_given_not_A <- 0.01
 
 
-# For P(!A|B) and P(A|B) we use Bayes' theorem but for that we need to find P(B) first which is the probability of alarm being triggered:
+# For P(¬A|B) and P(A|B) we use Bayes' theorem but for that we need to find P(B) first which is the probability of alarm being triggered:
 
 P_B <- (P_B_given_A*P_A) + (P_B_given_not_A*P_not_A)
 

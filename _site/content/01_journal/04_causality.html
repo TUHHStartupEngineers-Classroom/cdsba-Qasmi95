@@ -224,30 +224,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="assignment-4" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Assignment 4</h1>
-<div class="cell" data-hash="04_causality_cache/html/unnamed-chunk-1_d562229e44ffe9d1526878d627ddae35">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#load libraries</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <p>It is common for unrelated variables to appear to be correlated by coincidence. This is known as spurious correlation. The “Spending on science, space, and technology” in the United States is one example of this, as it shows a surprisingly strong correlation with the “Suicides by hanging, strangulation and suffocation” over time. While there is a significant positive correlation between these two variables, there is no causal relationship.</p>
 <p>Example taken from (https://tylervigen.com/spurious-correlations)</p>
 <p><a href="../../assets/img/Spurious.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Spurious Correlation Example"><img src="../../assets/img/Spurious.png" class="img-fluid" alt="Spurious Correlation Example"></a> Generating random data to show spurious correlation</p>
 <div class="cell" data-hash="04_causality_cache/html/unnamed-chunk-2_47e710e3dc4bede802b926152911c32c">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Generating random data</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb2-3"><a href="#cb2-3"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)  <span class="co"># Generating random data for variable X</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a>y <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">0.2</span>)  <span class="co"># Generating Y correlated with X</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="co"># Create a dataframe</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">X =</span> x, <span class="at">Y =</span> y)</span>
-<span id="cb2-9"><a href="#cb2-9"></a></span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="co"># Plotting the spurious correlation using ggplot2</span></span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">y =</span> Y)) <span class="sc">+</span></span>
-<span id="cb2-12"><a href="#cb2-12"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb2-13"><a href="#cb2-13"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Spurious Correlation"</span>,</span>
-<span id="cb2-14"><a href="#cb2-14"></a>       <span class="at">x =</span> <span class="st">"Variable X"</span>,</span>
-<span id="cb2-15"><a href="#cb2-15"></a>       <span class="at">y =</span> <span class="st">"Variable Y"</span>) <span class="sc">+</span></span>
-<span id="cb2-16"><a href="#cb2-16"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Generating random data</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)  <span class="co"># Generating random data for variable X</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>y <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">0.2</span>)  <span class="co"># Generating Y correlated with X</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="co"># Create a dataframe</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">X =</span> x, <span class="at">Y =</span> y)</span>
+<span id="cb1-9"><a href="#cb1-9"></a></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="co"># Plotting the spurious correlation using ggplot2</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">y =</span> Y)) <span class="sc">+</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Spurious Correlation"</span>,</span>
+<span id="cb1-14"><a href="#cb1-14"></a>       <span class="at">x =</span> <span class="st">"Variable X"</span>,</span>
+<span id="cb1-15"><a href="#cb1-15"></a>       <span class="at">y =</span> <span class="st">"Variable Y"</span>) <span class="sc">+</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -611,7 +607,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"loop":true,"descPosition":"bottom","selector":".lightbox","closeEffect":"zoom","openEffect":"zoom"});</script>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom","descPosition":"bottom","loop":true});</script>
 
 
 

@@ -4,6 +4,7 @@ title: "Causality"
 
 # Assignment 4
 ```{r}
+#| include: false
 #load libraries
 library(ggplot2)
 ```

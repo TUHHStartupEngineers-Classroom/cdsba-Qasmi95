@@ -4,6 +4,8 @@ title: "Randomized Controlled Trials"
 
 # Assignment 6
 ```{r}
+#| include: false
+#load libraries
 library(dplyr)
 library(ggplot2)
 ```
